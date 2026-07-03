@@ -58,6 +58,18 @@ python manage.py migrate --noinput
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+# First-ever boot (or a boot with no S3 backup to restore): the DB has
+# tables but no rows. Load the real site content baked into the image so
+# the site isn't blank. Once loaded, it lives on via the S3 autosave from
+# then on — this only ever fires once.
+if [ -f fixtures/production_seed.json ]; then
+  PROJECT_COUNT=$(python manage.py shell -c "from apps.portfolio.models import Project; print(Project.objects.count())" 2>/dev/null | tail -1)
+  if [ "$PROJECT_COUNT" = "0" ]; then
+    echo "Empty database — loading production_seed.json..."
+    python manage.py loaddata fixtures/production_seed.json
+  fi
+fi
+
 save_now() {
   if [ -n "$AWS_STORAGE_BUCKET_NAME" ]; then
     mysqldump -uroot "$DB_NAME" | gzip > /tmp/autosave.sql.gz

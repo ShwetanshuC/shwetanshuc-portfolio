@@ -1,0 +1,489 @@
+[
+{
+  "model": "portfolio.project",
+  "pk": 1,
+  "fields": {
+    "title": "Southern Park Music School",
+    "slug": "southern-park-music-school",
+    "category": "marketing",
+    "short_description": "Full production website for a local music school — events, blog, gallery, and inquiry forms.",
+    "long_description": "Complete rebuild of a 60-year-old music school's web presence, replacing a static, unmaintained site with a full Django CMS. Built a custom events system (recital and camp listings with registration links), a staff-editable content model for the faculty and about pages, a photo gallery, and honeypot-protected inquiry forms that route into a Django admin the office staff actually uses day to day. Deployed on AWS with S3 for media storage, Docker for the app container, and GitHub Actions for CI/CD — plus structured-data markup and a Search Console submission that took the site to a #1 Google Places ranking for local searches within a few months.",
+    "tech_stack": "Django, Python, AWS, Docker, CI/CD",
+    "live_url": "https://southernparkmusicschool.com",
+    "github_url": "",
+    "paper_file": "",
+    "thumbnail": "projects/thumbnails/southern_park_music_school_KYa5CGo.jpg",
+    "is_featured": true,
+    "sort_order": 1,
+    "year": 2024
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 2,
+  "fields": {
+    "title": "Miller Piano Showroom",
+    "slug": "miller-piano-showroom",
+    "category": "cms",
+    "short_description": "Piano inventory catalog with brand/condition filtering, events, and a staff-editable admin.",
+    "long_description": "Inventory catalog for a piano retailer, built to replace a static WordPress site the staff couldn't update themselves. Items (brand, condition, price, photos) are fully admin-managed — no code changes needed to list a new piano. Filtering is server-rendered (brand, condition, type) rather than client-side JS, so it stays fast and indexable. Also includes event listings, testimonials, and promotions modules. Runs on PostgreSQL, deployed on Railway with automatic deploys from the main branch.",
+    "tech_stack": "Django, PostgreSQL, Railway",
+    "live_url": "",
+    "github_url": "",
+    "paper_file": "",
+    "thumbnail": "",
+    "is_featured": true,
+    "sort_order": 2,
+    "year": 2026
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 3,
+  "fields": {
+    "title": "DockChain",
+    "slug": "dockchain",
+    "category": "research",
+    "short_description": "IoT-based port security and check-in platform, built at UNC Wilmington's SIPS Lab.",
+    "long_description": "Port check-in today is manual: a driver hands over paperwork, a guard verifies it by eye, and the truck sits in line. DockChain collapses that into one automated step by combining license-plate recognition with fingerprint verification at a physical gate. The gate itself is Arduino-driven — a camera module reads the plate, a fingerprint sensor confirms the driver, and the two have to match a pre-registered truck-driver pairing in the database before the barrier opens. The web app is a three-tier Django system: a public-facing registration flow for drivers and trucking companies, a port-operator dashboard for managing registrations and viewing check-in logs, and the hardware-facing layer that talks to the Arduino gate over serial and writes check-in events back to MySQL. Built solo as primary author over a 4-week residential research program (NCSSM Summer Ventures, 1 of 38 students selected statewide) after studying the maritime shipping industry to find the actual bottleneck, with three teammates helping build out the hardware and interface. Presented at the Summer Ventures Networking Symposium; the abstract was later accepted to the Scopus/Web of Science–indexed International Conference on Cyber Warfare & Security.",
+    "tech_stack": "Django, Python, Arduino, OpenAI API, MySQL",
+    "live_url": "",
+    "github_url": "",
+    "paper_file": "projects/papers/DockChain_Research_Paper.pdf",
+    "thumbnail": "projects/thumbnails/dockchain_podium_2.jpg",
+    "is_featured": true,
+    "sort_order": 3,
+    "year": 2025
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 6,
+  "fields": {
+    "title": "Interior Acoustic Treatment",
+    "slug": "southern-park-acoustics",
+    "category": "craft",
+    "short_description": "Ongoing acoustic treatment of a recital hall, built by hand as a thank-you to my teacher.",
+    "long_description": "The recital hall where I trained had a live, boomy sound — hard walls and a low ceiling meant slap echo and poor speech/music clarity, especially near the back rows. A friend and I are treating it with Rockwool mineral-wool panels: dense, high-NRC absorption material that cuts mid-to-high frequency reverberation without deadening the room completely (a fully dead room sounds unnatural for piano). We worked out first-reflection points off the architectural floorplan — the spots on the side walls and ceiling where sound bounces directly from the piano to a listener's ear — since treating those points gives the most audible improvement per panel. We built the panel frames ourselves (pine frame, Rockwool core, acoustically transparent fabric wrap), learning basic woodworking and a lot of trial and error on how tightly to wrap the fabric without compressing the insulation and killing its absorption. Consulted with acoustics professionals along the way rather than guessing. No one is paying for this — it's a thank-you to my teacher, Dr. Michael Lehtinen. Still installing panels.\r\n\r\nThe math behind it: we ran the hall's real (non-rectangular) geometry through AmRoc Pro, a finite-element room mode solver, rather than a simple rectangular calculator — the room isn't a plain box, so its resonant modes have to be solved numerically over the actual shape rather than read off the standard closed-form axial-mode equation. At 303.56 m³, the room's lowest modes sit around 12.4 Hz, 24.4 Hz, and 36.2 Hz — for example, the 36.2 Hz mode (visualized below) is a standing wave along the room's long axis, with a pressure antinode at each end (shown in red and blue, opposite phase) and a node in the middle where they cancel. Stand near an antinode and that frequency booms; stand near the node and it nearly disappears. That matters for what the panels can and can't fix. The room's Schroeder frequency — the crossover between individually audible resonant modes and a statistically diffuse, wave-density-dominated field — works out to f_s = 2000 x sqrt(RT60/V) = 2000 x sqrt(1.04/303.56) ≈ 117 Hz. Above that, the sound field is dense enough that broadband absorption (our Rockwool panels) directly improves clarity, which is what they're designed for. Below it, individual low-order modes like the ones above dominate, and thin panels absorb very little down there — real bass control needs thicker absorbers with an air gap behind them, or dedicated corner bass traps at the pressure antinodes. So the first-reflection panels are solving the mid/high-frequency clarity problem correctly, but the room's low-end boominess is a separate problem we're aware of and treating as future work, not something this phase claims to fix.",
+    "tech_stack": "Rockwool, Acoustic Modeling, Woodworking",
+    "live_url": "",
+    "github_url": "",
+    "paper_file": "",
+    "thumbnail": "projects/thumbnails/acoustics_room_thumb.jpg",
+    "is_featured": false,
+    "sort_order": 6,
+    "year": 2026
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 7,
+  "fields": {
+    "title": "Pokémon Card Scanner & Pricing Tool",
+    "slug": "pokemon-card-pricing",
+    "category": "research",
+    "short_description": "Photograph a Pokémon card, get its identity and live market price back — computer vision pipeline with a locally fine-tuned EfficientNet model.",
+    "long_description": "Photograph a Pokémon card and get its identity and live market price back. The identification pipeline runs in two tiers: a vision-language model (Gemini, or a local Ollama model like qwen2.5vl when running offline) reads the card name, set number, and HP directly from the photo in a single pass; if that's unavailable or returns a partial read, it falls back to EasyOCR against a normalized crop of the card, with separate passes tuned for the name region and the set-number region since holographic foil breaks OCR confidence differently in each. Card detection itself uses classical CV first — Canny edge detection into a perspective warp to isolate the card rectangle, then an HSV color-border mask as a fallback when edges are unclear — followed by a 4-rotation pass to auto-correct orientation before OCR ever runs. Separately, I trained and fine-tuned an EfficientNet model locally as an image embedder: it turns a card photo into a feature vector and matches it against known card embeddings by similarity, which catches cases OCR alone can't — heavy glare, off-angle shots, foil distortion. Matched cards get priced via the Pokémon TCG API, with the result page showing exactly what the OCR read (raw text, parsed query, matched card) so the pipeline stays debuggable instead of a black box. Not deployed yet — still training and testing locally.",
+    "tech_stack": "Django, Python, PyTorch, EfficientNet, EasyOCR, Gemini Vision API",
+    "live_url": "",
+    "github_url": "https://github.com/ShwetanshuC/pokemon-card-scanner",
+    "paper_file": "",
+    "thumbnail": "",
+    "is_featured": false,
+    "sort_order": 7,
+    "year": 2026
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 1,
+  "fields": {
+    "project": 3,
+    "image": "projects/gallery/dockchain_team.jpg",
+    "caption": "Presenting DockChain to faculty and judges",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 5,
+  "fields": {
+    "project": 3,
+    "image": "projects/gallery/dockchain_site_home.jpg",
+    "caption": "The live DockChain interface",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 6,
+  "fields": {
+    "project": 3,
+    "image": "projects/gallery/dockchain_site_signup.jpg",
+    "caption": "Driver registration flow",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 3
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 7,
+  "fields": {
+    "project": 2,
+    "image": "projects/gallery/miller_piano_google_search.jpg",
+    "caption": "The actual site ranks #1 — real Google searches, not staged",
+    "link_url": "https://www.google.com/search?q=piano+store+in+charlotte",
+    "related_search_queries": "piano store charlotte nc, yamaha piano dealer charlotte nc, used pianos charlotte nc, miller piano charlotte",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 11,
+  "fields": {
+    "project": 6,
+    "image": "projects/gallery/acoustics_building.jpg",
+    "caption": "Building the panel frames",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 12,
+  "fields": {
+    "project": 6,
+    "image": "projects/gallery/acoustics_installed.jpg",
+    "caption": "A finished panel, fabric-wrapped",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 1
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 13,
+  "fields": {
+    "project": 6,
+    "image": "projects/gallery/acoustics_room.jpg",
+    "caption": "Panels in place around the piano",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 14,
+  "fields": {
+    "project": 6,
+    "image": "projects/gallery/acoustics_floorplan2.jpg",
+    "caption": "Architectural floorplan of the recital hall",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 3
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 15,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_ai_result.jpg",
+    "caption": "Real scan result — N's Reshiram, identified and priced automatically",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 4
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 16,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_raw_scan_7uMpTtM.jpg",
+    "caption": "Raw input — handheld photo, no preprocessing",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 5
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 17,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_final_alakazam_Sbf8IVn.jpg",
+    "caption": "After detection, orientation correction, and crop",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 6
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 18,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_terminal.jpg",
+    "caption": "Running locally — Django + the local vision pipeline",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 3
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 19,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_ollama_inference.jpg",
+    "caption": "Local Ollama (qwen2.5vl) reading the card — real inference timing: ~19s, 164 tokens/sec prompt eval",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 1
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 20,
+  "fields": {
+    "project": 7,
+    "image": "projects/gallery/pokemon_pipeline_live.jpg",
+    "caption": "The full pipeline running — PyTorch/EfficientNet on MPS, then a live Pokémon TCG API price lookup",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.projectimage",
+  "pk": 21,
+  "fields": {
+    "project": 6,
+    "image": "projects/gallery/acoustics_amroc_mode_analysis.jpg",
+    "caption": "AmRoc Pro FEM room-mode analysis — the 36.2 Hz standing wave along the room's long axis (red/blue = opposite-phase pressure antinodes)",
+    "link_url": "",
+    "related_search_queries": "",
+    "sort_order": 4
+  }
+},
+{
+  "model": "portfolio.sitecontent",
+  "pk": 1,
+  "fields": {
+    "home_hero_name": "Shwetanshu",
+    "home_about_eyebrow": "About me",
+    "home_about_heading": "A pianist,\r\na developer,\r\nand a lot more.",
+    "home_cta_heading": "Want to work together?",
+    "webdev_hero_eyebrow": "Full-stack · Django & Python · Production deployments",
+    "webdev_hero_title": "Websites that work.",
+    "webdev_hero_tagline": "I design, build, and host Django sites for local businesses — no page builders, no templates. Every client owns a real admin panel and a site that actually ranks.",
+    "webdev_response_caption": "Shwetanshu responding to a client email at the beach. No matter where I am, never fear!",
+    "webdev_cta_heading": "Ready to build something?",
+    "webdev_cta_text": "Tell me what you need. I'll give you an honest scope and timeline.",
+    "music_intro": "Started at seven. Trained through the Royal Conservatory of Music — Bach, Chopin, Mozart, Beethoven, Schubert. Still playing.",
+    "music_achievements_eyebrow": "Notable achievements",
+    "music_achievements_heading": "On the record",
+    "music_acoustics_text": "A thank-you to my teacher, Dr. Michael Lehtinen (Eastman, Oberlin): a friend and I are building and installing Rockwool acoustic treatment for the recital hall where I trained. Unpaid, still in progress.",
+    "music_cta_heading": "Want to talk about a website?",
+    "music_cta_text": "The music is personal. The web work is how I earn — and I take it just as seriously.",
+    "projects_hero_title": "A few things I'm excited to show",
+    "projects_hero_subtitle": "Client sites, a research build, and a couple projects that aren't even done yet.",
+    "projects_cta_heading": "Want a site like one of these?",
+    "ba_hero_title": "Same business, new site",
+    "ba_hero_subtitle": "Drag the slider to compare what was there before against what's live now.",
+    "contact_hero_title": "Let's Build Something Together",
+    "contact_intro": "Whether you need a brand new website, a redesign, or a custom web application — I'd love to hear about it. I work directly with business owners, no middlemen."
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 2,
+  "fields": {
+    "section": "home_fact",
+    "title": "Self-taught Django. Founder, Chakraborthy Web Development.",
+    "subtitle": "",
+    "detail": "",
+    "sort_order": 1
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 3,
+  "fields": {
+    "section": "home_fact",
+    "title": "UNC Kenan-Flagler, Class of 2030 — Business & Data Science.",
+    "subtitle": "",
+    "detail": "",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 4,
+  "fields": {
+    "section": "achievement",
+    "title": "Grand Prize",
+    "subtitle": "Charleston International Piano Competition",
+    "detail": "",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 5,
+  "fields": {
+    "section": "achievement",
+    "title": "Performed at Carnegie Hall",
+    "subtitle": "",
+    "detail": "",
+    "sort_order": 1
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 6,
+  "fields": {
+    "section": "achievement",
+    "title": "Featured on NBC, CBS, FOX & AP News",
+    "subtitle": "",
+    "detail": "",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 7,
+  "fields": {
+    "section": "achievement",
+    "title": "Top scholarship prizes",
+    "subtitle": "American Protégé (Piano & Strings), North Carolina Music Teachers Association (NCMTA), and North Carolina Federation of Music Clubs (NCFMC)",
+    "detail": "",
+    "sort_order": 3
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 8,
+  "fields": {
+    "section": "achievement",
+    "title": "Accompanied & Performed with over 400+ students",
+    "subtitle": "Achieved \"Superior\" rankings in festivals and top prizes in competitions",
+    "detail": "",
+    "sort_order": 4
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 9,
+  "fields": {
+    "section": "repertoire",
+    "title": "J.S. Bach",
+    "subtitle": "Well-Tempered Clavier",
+    "detail": "Where I learned that structure and beauty aren't opposites. Every voice has a purpose.",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 10,
+  "fields": {
+    "section": "repertoire",
+    "title": "Frédéric Chopin",
+    "subtitle": "Nocturnes & Ballades",
+    "detail": "The pieces that made me understand phrasing — that the space between notes matters as much as the notes.",
+    "sort_order": 1
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 11,
+  "fields": {
+    "section": "repertoire",
+    "title": "Ludwig van Beethoven",
+    "subtitle": "Sonatas Op. 13, Op. 27",
+    "detail": "Difficulty is worth it when the result is genuinely expressive.",
+    "sort_order": 2
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 12,
+  "fields": {
+    "section": "repertoire",
+    "title": "Franz Schubert",
+    "subtitle": "Impromptus D. 899",
+    "detail": "Long-form musical thinking. The kind of patience that transfers directly to building anything worthwhile.",
+    "sort_order": 3
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 13,
+  "fields": {
+    "section": "repertoire",
+    "title": "W.A. Mozart",
+    "subtitle": "Piano Concertos",
+    "detail": "Economy. Not a note wasted. The hardest aesthetic to achieve and the one I most admire.",
+    "sort_order": 4
+  }
+},
+{
+  "model": "portfolio.listitem",
+  "pk": 14,
+  "fields": {
+    "section": "repertoire",
+    "title": "Claude Debussy",
+    "subtitle": "Préludes",
+    "detail": "Texture and atmosphere. A different way of thinking about color and time.",
+    "sort_order": 5
+  }
+},
+{
+  "model": "portfolio.beforeaftersite",
+  "pk": 1,
+  "fields": {
+    "title": "Miller Piano",
+    "client_name": "",
+    "tagline": "",
+    "description": "",
+    "before_screenshot": "",
+    "after_screenshot": "",
+    "before_label": "Before",
+    "after_label": "After",
+    "before_year": "2006",
+    "after_year": "2026",
+    "before_url": "/static/old-miller/Miller_Piano/Home.html",
+    "after_url": "https://millerpiano.com",
+    "visit_url": "",
+    "sort_order": 0
+  }
+},
+{
+  "model": "portfolio.beforeaftersite",
+  "pk": 2,
+  "fields": {
+    "title": "Southern Park Music School",
+    "client_name": "",
+    "tagline": "",
+    "description": "The old table-based site vs. the current Django rebuild.",
+    "before_screenshot": "before_after/before/southern_park_before_proper.jpg",
+    "after_screenshot": "before_after/after/southern_park_after_proper.jpg",
+    "before_label": "Before",
+    "after_label": "After",
+    "before_year": "2009",
+    "after_year": "2026",
+    "before_url": "",
+    "after_url": "",
+    "visit_url": "https://southernparkmusicschool.com",
+    "sort_order": 1
+  }
+}
+]
