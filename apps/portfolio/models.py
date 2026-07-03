@@ -179,15 +179,15 @@ class SiteContent(models.Model):
 
     # --- Music page ---
     music_intro = models.TextField(
-        default="Started at seven. Trained through the Royal Conservatory of Music — "
+        default="Started at seven. Ten years of classical piano — "
         "Bach, Chopin, Mozart, Beethoven, Schubert. Still playing."
     )
     music_achievements_eyebrow = models.CharField(max_length=100, default="Notable achievements")
     music_achievements_heading = models.CharField(max_length=200, default="On the record")
     music_acoustics_text = models.TextField(
-        default="A thank-you to my teacher, Dr. Michael Lehtinen (Eastman, Oberlin): a friend "
-        "and I are building and installing Rockwool acoustic treatment for the recital hall "
-        "where I trained. Unpaid, still in progress."
+        default="A thank-you to my teacher, Dr. Michael Lehtinen: Kieran Lee and I are building "
+        "and installing Rockwool acoustic treatment for the recital hall where I trained. "
+        "Still in progress."
     )
     music_cta_heading = models.CharField(max_length=200, default="Want to talk about a website?")
     music_cta_text = models.CharField(
@@ -210,8 +210,9 @@ class SiteContent(models.Model):
     # --- Contact page ---
     contact_hero_title = models.CharField(max_length=200, default="Let's Build Something Together")
     contact_intro = models.TextField(
-        default="Whether you need a brand new website, a redesign, or a custom web application — "
-        "I'd love to hear about it. I work directly with business owners, no middlemen."
+        default="Whether it's a new website, a redesign, a custom web application, or a piano "
+        "accompaniment or performance opportunity — I'd love to hear about it. I work directly "
+        "with clients, no middlemen."
     )
 
     class Meta:

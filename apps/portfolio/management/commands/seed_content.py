@@ -42,11 +42,11 @@ PROJECTS = [
         long_description=(
             "A Django platform combining license-plate recognition and fingerprint verification "
             "into a single port check-in step, aimed at cutting truck wait times at maritime ports. "
-            "Built during NCSSM Summer Ventures (1 of 38 students selected statewide) with three "
-            "teammates, using Arduino hardware for the physical gate and a three-tier web app for "
-            "logistics coordination. Presented at the Summer Ventures Networking Symposium as "
-            "primary author; abstract accepted to the Scopus/Web of Science–indexed International "
-            "Conference on Cyber Warfare & Security."
+            "Built as a team of four during NCSSM Summer Ventures (1 of 38 students selected "
+            "statewide), using Arduino hardware for the physical gate and a three-tier web app for "
+            "logistics coordination. I served as primary author and presented at the Summer "
+            "Ventures Networking Symposium; abstract accepted to the Scopus/Web of Science–indexed "
+            "International Conference on Cyber Warfare & Security."
         ),
         tech_stack="Django, Python, Arduino, OpenAI API, MySQL",
         is_featured=True,
@@ -86,10 +86,10 @@ PROJECTS = [
         short_description="Ongoing acoustic treatment of a recital hall, built by hand as a thank-you to my teacher.",
         long_description=(
             "The recital hall where I trained had muddy, unclear acoustics. As a thank-you to my "
-            "teacher, Dr. Michael Lehtinen (Eastman, Oberlin), a friend and I are designing and "
-            "installing internal Rockwool acoustic treatment for the full hall — learning the "
-            "acoustics math, consulting with professionals, and building and placing the panels "
-            "ourselves. Unpaid, still in progress."
+            "teacher, Dr. Michael Lehtinen, Kieran Lee and I are designing and installing internal "
+            "Rockwool acoustic treatment for the full hall — learning the acoustics math, "
+            "consulting with professionals, and building and placing the panels ourselves. "
+            "Still in progress."
         ),
         tech_stack="Rockwool, Acoustic Modeling, Woodworking",
         sort_order=6,

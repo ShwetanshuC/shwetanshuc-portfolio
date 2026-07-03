@@ -70,6 +70,9 @@ if [ -f fixtures/production_seed.json ]; then
   fi
 fi
 
+echo "Applying content corrections..."
+python manage.py sync_content_corrections
+
 save_now() {
   if [ -n "$AWS_STORAGE_BUCKET_NAME" ]; then
     mysqldump -uroot "$DB_NAME" | gzip > /tmp/autosave.sql.gz

@@ -4,9 +4,10 @@ from apps.portfolio.models import ListItem, SiteContent
 
 
 HOME_FACTS = [
-    "Classical piano since age seven. RCM-trained.",
+    "Classical piano since age seven.",
     "Self-taught Django. Founder, Chakraborthy Web Development.",
     "UNC Kenan-Flagler, Class of 2030 — Business & Data Science.",
+    "Interned in financial automation at Integrus Partners — EBITDA modeling, M&A screening.",
 ]
 
 ACHIEVEMENTS = [
