@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:3rem;padding-bottom:3rem;">
+  <!-- BREADCRUMB -->
+  <nav style="font-size:0.875rem;color:var(--color-text-muted);margin-bottom:2rem;">
+    <a href="{% url 'catalog_index' %}">Catalog</a>
+    {% if item.category %} &rsaquo; <a href="{% url 'catalog_by_category' item.category.slug %}">{{ item.category.name }}</a>{% endif %}
+    &rsaquo; {{ item.title }}
+  </nav>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:3rem;">
+    <!-- On wide screens: 2-col layout -->
+    <div style="display:grid;grid-template-columns:1fr;gap:3rem;">
+      <style>@media(min-width:900px){.item-detail-grid{grid-template-columns:1fr 1fr!important;}}</style>
+      <div class="item-detail-grid" style="display:grid;gap:3rem;">
+        <!-- IMAGE GALLERY -->
+        <div>
+          {% with images=item.images.all %}
+          {% if images %}
+            {% with first=images.0 %}
+            {% if first.image %}
+            <div style="border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1rem;aspect-ratio:4/3;">
+              <img src="{{ first.image.url }}" alt="{{ first.alt_text|default:item.title }}"
+                   style="width:100%;height:100%;object-fit:cover;object-position:center {{ first.image_focal_y|floatformat:0 }}0%;">
+            </div>
+            {% elif first.image_url %}
+            <div style="border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1rem;aspect-ratio:4/3;">
+              <img src="{{ first.image_url }}" alt="{{ first.alt_text|default:item.title }}"
+                   style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% if images|length > 1 %}
+            <div style="display:flex;gap:0.5rem;overflow-x:auto;padding-bottom:0.5rem;">
+              {% for img in images %}
+              <div style="flex-shrink:0;width:80px;height:80px;border-radius:var(--radius);overflow:hidden;border:2px solid var(--color-border);">
+                {% if img.image %}
+                <img src="{{ img.image.url }}" alt="{{ img.alt_text }}" style="width:100%;height:100%;object-fit:cover;">
+                {% elif img.image_url %}
+                <img src="{{ img.image_url }}" alt="{{ img.alt_text }}" style="width:100%;height:100%;object-fit:cover;">
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% else %}
+          <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:5rem;color:var(--color-text-light);">&#9654;</span>
+          </div>
+          {% endif %}
+          {% endwith %}
+
+          {% if item.video_url %}
+          <div style="margin-top:1.5rem;aspect-ratio:16/9;border-radius:var(--radius-lg);overflow:hidden;">
+            <iframe src="{{ item.video_url }}" width="100%" height="100%" frameborder="0" allowfullscreen style="display:block;"></iframe>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- ITEM INFO -->
+        <div>
+          {% if item.brand %}
+          <div style="font-size:0.875rem;color:var(--color-primary);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">{{ item.brand.name }}</div>
+          {% endif %}
+          <h1 style="font-size:2rem;margin-bottom:0.75rem;">{{ item.title }}</h1>
+
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;">
+            <span class="badge badge--muted">{{ item.get_condition_display }}</span>
+            {% if item.year %}<span class="badge badge--primary">{{ item.year }}</span>{% endif %}
+            {% if item.category %}<span class="badge badge--muted">{{ item.category.name }}</span>{% endif %}
+          </div>
+
+          <div style="margin-bottom:2rem;">
+            {% if item.hide_price or not item.price %}
+            <span class="price-tag--contact" style="font-size:1.5rem;">Contact for Price</span>
+            {% else %}
+            <span class="price-tag" style="font-size:2rem;">{{ item.display_price }}</span>
+            {% endif %}
+          </div>
+
+          {% if item.short_description %}
+          <p style="font-size:1.125rem;color:var(--color-text-muted);margin-bottom:2rem;line-height:1.7;">{{ item.short_description }}</p>
+          {% endif %}
+
+          {% if item.sku %}
+          <p style="font-size:0.875rem;color:var(--color-text-light);margin-bottom:1.5rem;">SKU: {{ item.sku }}</p>
+          {% endif %}
+
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <a href="{% url 'item_inquiry' item.slug %}" class="btn btn-primary btn--lg">Inquire About This Item</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline">General Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCRIPTION -->
+  {% if item.description %}
+  <div style="margin-top:3rem;padding-top:3rem;border-top:1px solid var(--color-border);">
+    <h2>Description</h2>
+    <div style="color:var(--color-text-muted);line-height:1.8;max-width:800px;">{{ item.description|linebreaks }}</div>
+  </div>
+  {% endif %}
+
+  <!-- RELATED ITEMS -->
+  {% if related_items %}
+  <div style="margin-top:3rem;padding-top:3rem;border-top:1px solid var(--color-border);">
+    <h2 style="margin-bottom:1.5rem;">Related Items</h2>
+    <div class="grid-4">
+      {% for rel in related_items %}
+      <a href="{% url 'catalog_detail' rel.slug %}" class="card" style="text-decoration:none;color:inherit;">
+        {% if rel.primary_image and rel.primary_image.image %}
+        <img class="card__image" src="{{ rel.primary_image.image.url }}" alt="{{ rel.title }}">
+        {% else %}
+        <div class="card__image" style="background:var(--color-surface-2);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--color-text-light);">&#9654;</div>
+        {% endif %}
+        <div class="card__body">
+          <h4 class="card__title" style="font-size:1rem;">{{ rel.title }}</h4>
+          <span class="{% if rel.hide_price or not rel.price %}price-tag--contact{% else %}price-tag{% endif %}" style="font-size:1.125rem;">{{ rel.display_price }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

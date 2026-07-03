@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Our Team — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Our Team</h1>
+    <p class="page-header__subtitle">The dedicated professionals behind our business.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if department_groups %}
+      {% for dept, members in department_groups %}
+      <div style="{% if not forloop.first %}margin-top:4rem;{% endif %}">
+        {% if dept %}
+        <h2 style="font-size:1.75rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--color-primary);">{{ dept.name }}</h2>
+        {% else %}
+        <h2 style="font-size:1.75rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--color-border);">Team</h2>
+        {% endif %}
+        <div class="grid-3">
+          {% for member in members %}
+          <div class="team-card">
+            {% if member.photo %}
+            <img class="team-card__photo" src="{{ member.photo.url }}" alt="{{ member.name }}"
+                 style="object-position:center {{ member.image_focal_y|floatformat:0 }}0%;">
+            {% else %}
+            <div class="team-card__photo-placeholder">{{ member.name|first }}</div>
+            {% endif %}
+            <div class="team-card__body">
+              <h3 class="team-card__name">{{ member.name }}</h3>
+              <p class="team-card__role">{{ member.role }}</p>
+              {% if member.bio %}
+              <p class="team-card__bio">{{ member.bio }}</p>
+              {% endif %}
+              {% if member.email or member.phone or member.linkedin_url %}
+              <div style="margin-top:1rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+                {% if member.email %}
+                <a href="mailto:{{ member.email }}" style="font-size:0.8125rem;color:var(--color-primary);">Email</a>
+                {% endif %}
+                {% if member.phone %}
+                <a href="tel:{{ member.phone }}" style="font-size:0.8125rem;color:var(--color-primary);">Call</a>
+                {% endif %}
+                {% if member.linkedin_url %}
+                <a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" style="font-size:0.8125rem;color:var(--color-primary);">LinkedIn</a>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="empty-state">
+      <h3>Meet Our Team</h3>
+      <p>Team member profiles will be added here soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

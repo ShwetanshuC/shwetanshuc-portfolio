@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if category %}{{ category.name }} — {% endif %}Catalog — {{ site_settings.site_name|default:"Master Template" }}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">{% if category %}{{ category.name }}{% else %}Our Catalog{% endif %}</h1>
+    <p class="page-header__subtitle">Browse our full selection of products.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="catalog-layout">
+
+      <!-- FILTER SIDEBAR -->
+      <aside class="filter-sidebar">
+        <h3 style="font-size:1rem;margin-bottom:1.5rem;">Filter</h3>
+
+        {% if brands %}
+        <div class="filter-group">
+          <div class="filter-group__title">Brand</div>
+          <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if current_condition %}condition={{ current_condition }}&{% endif %}"
+             class="{% if not current_brand %}active{% endif %}">All Brands</a>
+          {% for brand in brands %}
+          <a href="?brand={{ brand.slug }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_condition %}&condition={{ current_condition }}{% endif %}"
+             class="{% if current_brand == brand.slug %}active{% endif %}">{{ brand.name }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if categories %}
+        <div class="filter-group">
+          <div class="filter-group__title">Category</div>
+          <a href="?{% if current_brand %}brand={{ current_brand }}&{% endif %}{% if current_condition %}condition={{ current_condition }}&{% endif %}"
+             class="{% if not current_category %}active{% endif %}">All Categories</a>
+          {% for cat in categories %}
+          <a href="{% url 'catalog_by_category' cat.slug %}"
+             class="{% if current_category == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if condition_choices %}
+        <div class="filter-group">
+          <div class="filter-group__title">Condition</div>
+          <a href="?{% if current_brand %}brand={{ current_brand }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}"
+             class="{% if not current_condition %}active{% endif %}">All</a>
+          {% for value, label in condition_choices %}
+          <a href="?condition={{ value }}{% if current_brand %}&brand={{ current_brand }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}"
+             class="{% if current_condition == value %}active{% endif %}">{{ label }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </aside>
+
+      <!-- ITEMS GRID -->
+      <div>
+        {% if items %}
+        <div class="grid-3">
+          {% for item in items %}
+          <a href="{% url 'catalog_detail' item.slug %}" class="card" style="text-decoration:none;color:inherit;">
+            {% if item.primary_image %}
+            <img class="card__image" src="{{ item.primary_image.image.url }}" alt="{{ item.title }}" style="object-position:center {{ item.hero_image_focal_y|floatformat:0 }}0%;">
+            {% else %}
+            <div class="card__image" style="background:var(--color-surface-2);display:flex;align-items:center;justify-content:center;">
+              <span style="color:var(--color-text-light);font-size:3rem;">&#9654;</span>
+            </div>
+            {% endif %}
+            <div class="card__body">
+              {% if item.brand %}
+              <div style="font-size:0.75rem;color:var(--color-primary);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">{{ item.brand.name }}</div>
+              {% endif %}
+              <h3 class="card__title" style="font-size:1.125rem;">{{ item.title }}</h3>
+              {% if item.short_description %}
+              <p class="card__text">{{ item.short_description|truncatewords:15 }}</p>
+              {% endif %}
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+                <span class="{% if item.hide_price or not item.price %}price-tag--contact{% else %}price-tag{% endif %}" style="font-size:1.25rem;">
+                  {{ item.display_price }}
+                </span>
+                <span class="badge badge--muted">{{ item.get_condition_display }}</span>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+
+        <!-- PAGINATION -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if current_brand %}&brand={{ current_brand }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_condition %}&condition={{ current_condition }}{% endif %}">&laquo; Prev</a>
+          {% endif %}
+          {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+          <span class="current">{{ num }}</span>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a href="?page={{ num }}{% if current_brand %}&brand={{ current_brand }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_condition %}&condition={{ current_condition }}{% endif %}">{{ num }}</a>
+          {% endif %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if current_brand %}&brand={{ current_brand }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_condition %}&condition={{ current_condition }}{% endif %}">Next &raquo;</a>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="empty-state">
+          <h3>No items found</h3>
+          <p>Try adjusting your filters or browse all categories.</p>
+          <a href="{% url 'catalog_index' %}" class="btn btn-primary" style="margin-top:1rem;">View All Items</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

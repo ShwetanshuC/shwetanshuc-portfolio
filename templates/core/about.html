@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}About Us — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">About Us</h1>
+    <p class="page-header__subtitle">Learn more about our team and our story.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div style="max-width:800px;margin:0 auto;text-align:center;">
+      <h2>Who We Are</h2>
+      <p style="color:var(--color-text-muted);font-size:1.125rem;line-height:1.8;">
+        {% if site_settings.tagline %}{{ site_settings.tagline }}{% else %}We are passionate about providing excellent products and services to our customers.{% endif %}
+      </p>
+    </div>
+  </div>
+</section>
+
+{% if team_members %}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Meet the Team</h2>
+      <p class="section__subtitle">The people behind our business.</p>
+    </div>
+    <div class="grid-3">
+      {% for member in team_members %}
+      <div class="team-card">
+        {% if member.photo %}
+        <img class="team-card__photo" src="{{ member.photo.url }}" alt="{{ member.name }}">
+        {% else %}
+        <div class="team-card__photo-placeholder">{{ member.name|first }}</div>
+        {% endif %}
+        <div class="team-card__body">
+          <h3 class="team-card__name">{{ member.name }}</h3>
+          <p class="team-card__role">{{ member.role }}</p>
+          {% if member.bio %}
+          <p class="team-card__bio">{{ member.bio|truncatewords:30 }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="{% url 'team' %}" class="btn btn-outline">View Full Team</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if faqs %}
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+    </div>
+    <div style="max-width:800px;margin:0 auto;">
+      {% for faq in faqs %}
+      <details class="accordion">
+        <summary>{{ faq.question }}</summary>
+        <div class="accordion__body">{{ faq.answer }}</div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section" style="background:var(--color-surface);text-align:center;">
+  <div class="container">
+    <h2>Get in Touch</h2>
+    <p style="color:var(--color-text-muted);margin-bottom:2rem;">Have questions? We would love to hear from you.</p>
+    <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+  </div>
+</section>
+{% endblock %}

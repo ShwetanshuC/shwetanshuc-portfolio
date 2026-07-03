@@ -1,0 +1,114 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Classical Pianist — Shwetanshu Chakraborthy{% endblock %}
+{% block meta_desc %}Classical pianist trained through the Royal Conservatory of Music. Carnegie Hall performance, Charleston International Piano Competition Grand Prize, ten years of Bach, Chopin, and Beethoven.{% endblock %}
+{% block og_title %}Classical Pianist — Shwetanshu Chakraborthy{% endblock %}
+{% block og_desc %}Royal Conservatory-trained classical pianist. Carnegie Hall performance, Charleston International Piano Competition Grand Prize.{% endblock %}
+{% block twitter_title %}Classical Pianist — Shwetanshu Chakraborthy{% endblock %}
+{% block twitter_desc %}Royal Conservatory-trained classical pianist. Carnegie Hall performance, Charleston International Piano Competition Grand Prize.{% endblock %}
+
+{% block content %}
+
+<h1 class="sr-only">Classical Pianist — Shwetanshu Chakraborthy</h1>
+
+{# ============================================================ REPERTOIRE / INFLUENCES #}
+<section class="section" style="padding-top:calc(82px + var(--space-12))">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <div class="section-eyebrow">What I play</div>
+      <h2 class="section-title">Repertoire &amp; Influences</h2>
+    </div>
+    <div class="project-list project-list--plain" style="padding-top:0">
+      {% for piece in repertoire %}
+      <div class="project-list-row">
+        <h3 class="project-list-row-title">{{ piece.title }}</h3>
+        <p class="project-list-row-meta">{{ piece.subtitle }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ============================================================ RECORDINGS #}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <div class="section-eyebrow">Recordings</div>
+      <h2 class="section-title">7 Levels of Twinkle, Twinkle Little Star</h2>
+      <p class="section-subtitle">A piece built as a set of variations, from beginner to concert level.</p>
+    </div>
+    <div class="reveal" style="max-width:720px;margin:0 auto;">
+      <a href="https://www.youtube.com/watch?v=CTIjUIZ9C0c" target="_blank" rel="noopener"
+         style="position:relative;display:block;width:100%;padding-bottom:56.25%;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);">
+        <img src="https://i.ytimg.com/vi/CTIjUIZ9C0c/hqdefault.jpg" alt="7 Levels of Twinkle, Twinkle Little Star — piano performance"
+             style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+        <span style="position:absolute;inset:0;background:rgba(7,15,9,0.25);display:flex;align-items:center;justify-content:center">
+          <span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--color-primary-dark)"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </span>
+      </a>
+      <p class="reveal" style="text-align:center;font-size:0.875rem;color:var(--color-text-muted);margin-top:0.75rem">
+        Watch on YouTube &middot; Charleston International Music Competition
+      </p>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ ACHIEVEMENTS #}
+<section class="section">
+  <div class="container">
+    <div class="achievements-split">
+      <div class="achievements-photo reveal">
+        <img src="{% static 'images/incoming-protege.jpg' %}" alt="Performing at the American Protégé competition, Carnegie Hall">
+      </div>
+      <div class="achievements-text">
+        <div class="section-eyebrow reveal">{{ site_content.music_achievements_eyebrow }}</div>
+        <h2 class="section-title reveal" style="margin-bottom:2rem">{{ site_content.music_achievements_heading }}</h2>
+        <div class="achievement-list">
+          {% for item in achievements %}
+          <div class="achievement-row reveal reveal-delay-{{ forloop.counter0|add:1 }}">
+            <span class="achievement-index">{{ forloop.counter|stringformat:"02d" }}</span>
+            <div class="achievement-row-body">
+              <h3 class="achievement-row-title">{{ item.title }}</h3>
+              {% if item.subtitle %}<p class="achievement-row-subtitle">{{ item.subtitle }}</p>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ ACOUSTICS #}
+<section class="piano-section">
+  <div class="piano-content">
+    <div class="piano-text">
+      <div class="reveal">
+        <div class="section-eyebrow">A side project</div>
+        <h2 class="section-title">Fixing the room, not just the playing</h2>
+      </div>
+      <p class="reveal">{{ site_content.music_acoustics_text }}</p>
+      <div class="reveal reveal-delay-2" style="margin-top:1.5rem">
+        <a href="{% url 'project_detail' 'southern-park-acoustics' %}" class="btn btn--outline" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.25)">More on this project &rarr;</a>
+      </div>
+    </div>
+    <div class="piano-visual reveal">
+      <img src="{% static 'images/recital-hall-stage.jpg' %}" alt="The recital hall being treated for acoustics"
+           style="width:100%;max-width:400px;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)">
+    </div>
+  </div>
+</section>
+
+{# ============================================================ CTA #}
+<section class="cta-strip">
+  <div class="container reveal">
+    <h2>{{ site_content.music_cta_heading }}</h2>
+    <p>{{ site_content.music_cta_text }}</p>
+    <a href="{% url 'web_dev' %}" class="btn-cta-white">See what I build &rarr;</a>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:iphoto="urn:iphoto:property" xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>Used Uprights</title>
+    <link>http://www.millerpiano.com/Miller_Piano/Used_Uprights.html</link>
+    <description>Used Uprights</description>
+    <item>
+      <title>not available</title>
+      <link>http://www.millerpiano.com/Miller_Piano/Used_Uprights.html#0</link>
+      <guid isPermaLink="false">f0f4a297-d8b3-4163-9607-cc7db6402e9c</guid>
+      <enclosure url="http://www.millerpiano.com/Miller_Piano/Used_Uprights_files/Media/20200305_145439/20200305_145439.jpg" length="215774" type="image/jpeg"/>
+      <iphoto:thumbnail>http://www.millerpiano.com/Miller_Piano/Used_Uprights_files/Media/20200305_145439/thumb.jpg</iphoto:thumbnail>
+      <iweb:micro>http://www.millerpiano.com/Miller_Piano/Used_Uprights_files/Media/20200305_145439/micro.jpg</iweb:micro>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_159_48&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;not available&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+    </item>
+  </channel>
+</rss>

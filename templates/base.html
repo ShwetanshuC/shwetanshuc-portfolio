@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site_settings.site_name|default:"Master Template" }}{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  {% include "partials/_nav.html" %}
+
+  {% if site_settings.alert_enabled and site_settings.alert_message %}
+  <div class="alert-banner" style="background:{{ site_settings.alert_color }}">
+    {{ site_settings.alert_message }}
+  </div>
+  {% endif %}
+
+  <main class="main-content">
+    {% if messages %}
+    <div class="container">
+      <div class="messages">
+        {% for message in messages %}
+        <div class="message message--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/_footer.html" %}
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

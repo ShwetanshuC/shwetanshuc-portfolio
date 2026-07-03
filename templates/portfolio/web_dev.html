@@ -1,0 +1,493 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Web Development — Shwetanshu Chakraborthy{% endblock %}
+{% block meta_desc %}Full-stack Django developer. I build and host production websites for local businesses — real admin panels, real deployments, real clients.{% endblock %}
+{% block og_title %}Web Development — Shwetanshu Chakraborthy{% endblock %}
+{% block og_desc %}Full-stack Django developer. I build and host production websites for local businesses — real admin panels, real deployments, real clients.{% endblock %}
+{% block twitter_title %}Web Development — Shwetanshu Chakraborthy{% endblock %}
+{% block twitter_desc %}Full-stack Django developer. I build and host production websites for local businesses — real admin panels, real deployments, real clients.{% endblock %}
+
+{% block content %}
+
+{# ============================================================ HERO #}
+<section class="wd-hero wd-hero--split hero-section">
+  <div class="wd-hero-bg"></div>
+  <div class="wd-hero-overlay"></div>
+  <div class="wd-hero-content wd-hero-content--split">
+    <div class="wd-hero-text">
+      <p class="hero-location">{{ site_content.webdev_hero_eyebrow }}</p>
+      <h1 class="wd-hero-name">{{ site_content.webdev_hero_title }}</h1>
+      <p class="wd-hero-tagline">{{ site_content.webdev_hero_tagline }}</p>
+      <div class="hero-cta-row">
+        <a href="{% url 'contact' %}" class="btn-hero-primary">Start a project</a>
+        <a href="#transformations" class="btn-hero-secondary">See the work &darr;</a>
+      </div>
+    </div>
+    <div class="wd-hero-photo-card reveal">
+      <img src="{% static 'images/beach-emails.jpg' %}" alt="Shwetanshu checking his phone on a beach at dusk">
+      <p>{{ site_content.webdev_response_caption }}</p>
+    </div>
+  </div>
+  <a href="#stats-strip" class="scroll-indicator" aria-label="Scroll to track record"><div class="arrow"></div></a>
+</section>
+
+{# ============================================================ TRACK RECORD — real, quantified #}
+<section class="stats-strip" id="stats-strip">
+  <div class="container reveal">
+    <div class="stats-grid stats-grid--2">
+      <div class="stat-item">
+        <div class="stat-number">15,000+</div>
+        <div class="stat-label">local site visits driven via technical SEO</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">$10,000+</div>
+        <div class="stat-label">in annual sales increase reported by clients</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ SHOWCASE 01 — Inventory / Miller Piano #}
+<section class="wd-showcase wd-showcase--01">
+  <div class="wd-showcase-inner">
+    <div class="wd-showcase-text reveal">
+      <span class="wd-showcase-num">01</span>
+      <span class="wd-cat-tag">Inventory &amp; Catalog</span>
+      <h2 class="wd-showcase-title">Product &amp;<br>Inventory Sites</h2>
+      <p class="wd-showcase-desc">Filterable catalogs, inventory management, real-time pricing, and staff-editable listings. Your team owns the content from day one — no IT department required.</p>
+      <div class="wd-showcase-chips">
+        <span>Filterable catalog</span>
+        <span>Staff admin panel</span>
+        <span>Real-time pricing</span>
+        <span>AWS hosted</span>
+      </div>
+    </div>
+    <div class="wd-showcase-mockup reveal reveal-delay-1">
+      <div class="wd-mockup wd-mockup--piano">
+        <div class="wd-mock-chrome">
+          <span class="wd-mock-dot wd-mock-dot--r"></span>
+          <span class="wd-mock-dot wd-mock-dot--y"></span>
+          <span class="wd-mock-dot wd-mock-dot--g"></span>
+          <span class="wd-mock-url">yourbusiness.com/inventory</span>
+        </div>
+        <div class="wd-mock-piano-nav">
+          <span class="wd-mock-piano-logo">Your Business</span>
+          <span class="wd-mock-piano-navlinks">Inventory &nbsp; Events &nbsp; Contact</span>
+        </div>
+        <div class="wd-mock-piano-filters">
+          <span class="wd-mock-filter wd-mock-filter--active">All Items</span>
+          <span class="wd-mock-filter">Category A</span>
+          <span class="wd-mock-filter">Category B</span>
+          <span class="wd-mock-filter">Category C</span>
+        </div>
+        <div class="wd-mock-piano-grid">
+          <div class="wd-mock-piano-card">
+            <div class="wd-mock-piano-thumb wd-mock-piano-thumb--grand"></div>
+            <div class="wd-mock-piano-info">
+              <p class="wd-mock-piano-brand">Brand A</p>
+              <p class="wd-mock-piano-model">Flagship Model</p>
+              <p class="wd-mock-piano-price">$1,850</p>
+            </div>
+          </div>
+          <div class="wd-mock-piano-card">
+            <div class="wd-mock-piano-thumb wd-mock-piano-thumb--yamaha"></div>
+            <div class="wd-mock-piano-info">
+              <p class="wd-mock-piano-brand">Brand B</p>
+              <p class="wd-mock-piano-model">Standard Model</p>
+              <p class="wd-mock-piano-price">$620</p>
+            </div>
+          </div>
+          <div class="wd-mock-piano-card">
+            <div class="wd-mock-piano-thumb wd-mock-piano-thumb--kawai"></div>
+            <div class="wd-mock-piano-info">
+              <p class="wd-mock-piano-brand">Brand C</p>
+              <p class="wd-mock-piano-model">Entry Model</p>
+              <p class="wd-mock-piano-price">$180</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ SHOWCASE 02 — Small Business / Southern Park #}
+<section class="wd-showcase wd-showcase--02">
+  <div class="wd-showcase-inner wd-showcase-inner--reverse">
+    <div class="wd-showcase-mockup reveal">
+      <div class="wd-mockup wd-mockup--school">
+        <div class="wd-mock-chrome wd-mock-chrome--light">
+          <span class="wd-mock-dot wd-mock-dot--r"></span>
+          <span class="wd-mock-dot wd-mock-dot--y"></span>
+          <span class="wd-mock-dot wd-mock-dot--g"></span>
+          <span class="wd-mock-url wd-mock-url--dark">yourbusiness.com</span>
+        </div>
+        <div class="wd-mock-school-header">
+          <span class="wd-mock-school-name">Your Business</span>
+          <span class="wd-mock-school-tagline">A tagline goes here</span>
+        </div>
+        <div class="wd-mock-school-events">
+          <div class="wd-mock-event-label">Upcoming Events</div>
+          <div class="wd-mock-event-row">
+            <span class="wd-mock-event-date"><strong>Jun</strong><span>12</span></span>
+            <div class="wd-mock-event-info">
+              <p class="wd-mock-event-name">Event Name</p>
+              <small class="wd-mock-event-sub">7:00 PM &middot; Main Hall</small>
+            </div>
+            <span class="wd-mock-event-btn">Register</span>
+          </div>
+          <div class="wd-mock-event-row">
+            <span class="wd-mock-event-date"><strong>Jun</strong><span>20</span></span>
+            <div class="wd-mock-event-info">
+              <p class="wd-mock-event-name">Seasonal Program</p>
+              <small class="wd-mock-event-sub">Open enrollment &middot; 2 weeks</small>
+            </div>
+            <span class="wd-mock-event-btn">Register</span>
+          </div>
+          <div class="wd-mock-event-row">
+            <span class="wd-mock-event-date"><strong>Jul</strong><span>4</span></span>
+            <div class="wd-mock-event-info">
+              <p class="wd-mock-event-name">Community Event</p>
+              <small class="wd-mock-event-sub">Free admission</small>
+            </div>
+            <span class="wd-mock-event-btn wd-mock-event-btn--free">Free</span>
+          </div>
+        </div>
+        <div class="wd-mock-contact-bar">
+          <span class="wd-mock-input-fake">Your name…</span>
+          <span class="wd-mock-submit-btn">Get in Touch</span>
+        </div>
+      </div>
+    </div>
+    <div class="wd-showcase-text wd-showcase-text--light reveal reveal-delay-1">
+      <span class="wd-showcase-num wd-showcase-num--light">02</span>
+      <span class="wd-cat-tag">Small Business</span>
+      <h2 class="wd-showcase-title wd-showcase-title--light">Marketing &amp;<br>Service Sites</h2>
+      <p class="wd-showcase-desc wd-showcase-desc--light">Full business websites with event management, blog, gallery, forms, and a clean admin your team can use on day one.</p>
+      <div class="wd-showcase-chips wd-showcase-chips--light">
+        <span>Event management</span>
+        <span>Blog &amp; gallery</span>
+        <span>Contact forms</span>
+        <span>Team admin</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ SHOWCASE 03 — Personal Brand #}
+<section class="wd-showcase wd-showcase--03">
+  <div class="wd-showcase-inner">
+    <div class="wd-showcase-text reveal">
+      <span class="wd-showcase-num">03</span>
+      <span class="wd-cat-tag">Personal Brand</span>
+      <h2 class="wd-showcase-title">Portfolio &amp;<br>Personal Sites</h2>
+      <p class="wd-showcase-desc">Custom-built personal sites that actually represent who you are — not a template picked off a Squarespace pricing page. Every pixel intentional.</p>
+      <div class="wd-showcase-chips">
+        <span>Custom design</span>
+        <span>Zero templates</span>
+        <span>Full CMS</span>
+        <span>Pixel-perfect</span>
+      </div>
+    </div>
+    <div class="wd-showcase-mockup reveal reveal-delay-1">
+      <div class="wd-mockup wd-mockup--portfolio">
+        <div class="wd-mock-chrome">
+          <span class="wd-mock-dot wd-mock-dot--r"></span>
+          <span class="wd-mock-dot wd-mock-dot--y"></span>
+          <span class="wd-mock-dot wd-mock-dot--g"></span>
+          <span class="wd-mock-url">shwetanshu.com</span>
+        </div>
+        <div class="wd-mock-port-hero">
+          <div class="wd-mock-port-nav">
+            <span class="wd-mock-port-logo">Shwetanshu</span>
+            <div class="wd-mock-port-nav-links">
+              <span>Web Dev</span>
+              <span>Music</span>
+              <span>Projects</span>
+            </div>
+          </div>
+          <div class="wd-mock-port-content">
+            <p class="wd-mock-port-eyebrow">Full-Stack Developer</p>
+            <h3 class="wd-mock-port-name">Shwetanshu</h3>
+            <div class="wd-mock-port-btns">
+              <span class="wd-mock-port-btn-primary">Web Development</span>
+              <span class="wd-mock-port-btn-ghost">Projects →</span>
+            </div>
+          </div>
+        </div>
+        <div class="wd-mock-port-about">
+          <div class="wd-mock-port-photo"></div>
+          <div class="wd-mock-port-about-text">
+            <div class="wd-mock-port-heading">A pianist,<br>a developer,<br>and a lot more.</div>
+            <div class="wd-mock-line"></div>
+            <div class="wd-mock-line wd-mock-line--short"></div>
+            <div class="wd-mock-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ TRANSFORMATIONS — main feature #}
+<section class="before-after-section" id="transformations">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <div class="section-eyebrow">Before &amp; After</div>
+      <h2 class="section-title">The transformation</h2>
+      <p class="section-subtitle">Drag the slider to see what a real rebuild does. These are two of the oldest sites I've redesigned — the two clients who agreed to have the before shown publicly.</p>
+      <p class="section-subtitle" style="margin-top:0.5rem">A few more I'm excited about — <a href="{% url 'projects' %}">see the projects &rarr;</a></p>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    {% for site in ba_sites %}
+    <div class="ba-card reveal">
+      <div class="ba-card-header">
+        <div class="ba-mac-dots">
+          <span class="ba-mac-dot ba-mac-dot--red"></span>
+          <span class="ba-mac-dot ba-mac-dot--yellow"></span>
+          <span class="ba-mac-dot ba-mac-dot--green"></span>
+        </div>
+        <div class="ba-card-header-text">
+          <p class="ba-card-title">{{ site.client_name|default:site.title }}</p>
+          {% if site.tagline %}<p class="ba-card-client">{{ site.tagline }}</p>{% endif %}
+        </div>
+      </div>
+
+      {% if site.before_url or site.after_url %}
+      {# ── IFRAME DRAG SLIDER MODE ── #}
+      <div class="ba-iframe-wrap">
+        <div class="ba-slider-wrap" data-slider>
+          <div class="ba-before">
+            {% if site.before_url %}
+            <iframe src="{{ site.before_url }}"
+                    sandbox="allow-scripts allow-same-origin allow-forms"
+                    loading="lazy" tabindex="-1"></iframe>
+            {% elif site.before_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.before_screenshot.url }}" alt="{{ site.before_label|default:'Before' }}"></div>
+            {% else %}
+            <div class="ba-placeholder before-placeholder"><span class="ba-label">{{ site.before_label|default:"Before" }}</span></div>
+            {% endif %}
+            <span class="ba-side-label ba-side-label--left">{{ site.before_label|default:"Before" }}</span>
+          </div>
+          <div class="ba-after">
+            {% if site.after_url %}
+            <iframe src="{{ site.after_url }}"
+                    sandbox="allow-scripts allow-same-origin allow-forms"
+                    loading="lazy" tabindex="-1"
+                    data-fallback-url="{{ site.after_url }}"></iframe>
+            <a href="{{ site.after_url }}" target="_blank" rel="noopener" class="ba-visit-badge">Visit live site &nearr;</a>
+            <div class="ba-blocked-overlay" style="display:none">
+              <span>Live preview unavailable</span>
+              <a href="{{ site.after_url }}" target="_blank" rel="noopener">Open live site &rarr;</a>
+            </div>
+            {% elif site.after_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.after_screenshot.url }}" alt="{{ site.after_label|default:'After' }}"></div>
+            {% else %}
+            <div class="ba-placeholder after-placeholder"><span class="ba-label">{{ site.after_label|default:"After" }}</span></div>
+            {% endif %}
+            <span class="ba-side-label ba-side-label--right">{{ site.after_label|default:"After" }}</span>
+          </div>
+          <div class="ba-divider"></div>
+          <div class="ba-handle">
+            <div class="ba-handle-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% else %}
+      {# ── STATIC IMAGE SLIDER MODE ── #}
+      <div class="ba-slider-wrap" data-slider>
+        <div class="ba-before">
+          {% if site.before_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.before_screenshot.url }}" alt="{{ site.before_label|default:'Before' }}"></div>
+          {% else %}
+            <div class="ba-placeholder before-placeholder">
+              <span class="ba-label">{{ site.before_label|default:"Before" }}</span>
+              <span class="ba-placeholder-text">Old site</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="ba-after">
+          {% if site.after_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.after_screenshot.url }}" alt="{{ site.after_label|default:'After' }}"></div>
+            {% if site.visit_url %}
+            <a href="{{ site.visit_url }}" target="_blank" rel="noopener" class="ba-visit-badge">Visit live site &nearr;</a>
+            {% endif %}
+          {% else %}
+            <div class="ba-placeholder after-placeholder">
+              <span class="ba-label">{{ site.after_label|default:"After" }}</span>
+              <span class="ba-placeholder-text">New site</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle">
+          <div class="ba-handle-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="ba-labels-row">
+        <div class="ba-label-panel ba-label-panel--before"><span class="ba-tag ba-tag--before">{{ site.before_label|default:"Before" }}{% if site.before_year %} &middot; {{ site.before_year }}{% endif %}</span></div>
+        <div class="ba-label-panel ba-label-panel--after"><span class="ba-tag ba-tag--after">{{ site.after_label|default:"After" }}{% if site.after_year %} &middot; {{ site.after_year }}{% endif %}</span></div>
+      </div>
+    </div>
+    {% empty %}
+    {# Static placeholder cards when no DB entries #}
+    <div class="ba-card reveal">
+      <div class="ba-card-header">
+        <div class="ba-mac-dots">
+          <span class="ba-mac-dot ba-mac-dot--red"></span>
+          <span class="ba-mac-dot ba-mac-dot--yellow"></span>
+          <span class="ba-mac-dot ba-mac-dot--green"></span>
+        </div>
+        <div class="ba-card-header-text">
+          <p class="ba-card-title">Miller Piano Showroom</p>
+          <p class="ba-card-client">Inventory catalog &amp; events</p>
+        </div>
+      </div>
+      <div class="ba-slider-wrap" data-slider>
+        <div class="ba-before"><div class="ba-placeholder before-placeholder"><span class="ba-label">Before</span><span class="ba-placeholder-text">Generic WordPress theme</span></div></div>
+        <div class="ba-after"><div class="ba-placeholder after-placeholder"><span class="ba-label">After</span><span class="ba-placeholder-text">Custom Django build</span></div></div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle"><div class="ba-handle-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></div></div>
+      </div>
+      <div class="ba-labels-row">
+        <div class="ba-label-panel ba-label-panel--before"><span class="ba-tag ba-tag--before">Before</span></div>
+        <div class="ba-label-panel ba-label-panel--after"><span class="ba-tag ba-tag--after">After</span></div>
+      </div>
+    </div>
+    <div class="ba-card reveal reveal-delay-1">
+      <div class="ba-card-header">
+        <div class="ba-mac-dots">
+          <span class="ba-mac-dot ba-mac-dot--red"></span>
+          <span class="ba-mac-dot ba-mac-dot--yellow"></span>
+          <span class="ba-mac-dot ba-mac-dot--green"></span>
+        </div>
+        <div class="ba-card-header-text">
+          <p class="ba-card-title">Southern Park Music School</p>
+          <p class="ba-card-client">Marketing site &amp; event management</p>
+        </div>
+      </div>
+      <div class="ba-slider-wrap" data-slider>
+        <div class="ba-before"><div class="ba-placeholder before-placeholder"><span class="ba-label">Before</span><span class="ba-placeholder-text">Outdated static site</span></div></div>
+        <div class="ba-after"><div class="ba-placeholder after-placeholder"><span class="ba-label">After</span><span class="ba-placeholder-text">Full Django + AWS build</span></div></div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle"><div class="ba-handle-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></div></div>
+      </div>
+      <div class="ba-labels-row">
+        <div class="ba-label-panel ba-label-panel--before"><span class="ba-tag ba-tag--before">Before</span></div>
+        <div class="ba-label-panel ba-label-panel--after"><span class="ba-tag ba-tag--after">After</span></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ============================================================ PROCESS #}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="section-title">From call to live</h2>
+    </div>
+  </div>
+  <div class="process-steps" style="padding: 0 var(--container-pad)">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Discovery call</h3>
+      <p class="step-desc">We talk through what your business needs, what doesn't work about your current site, and what success looks like. Honest, no-pitch.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Proposal + timeline</h3>
+      <p class="step-desc">I send you a clear scope, price, and timeline. No vague estimates. If we're aligned, we move forward.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Build + reviews</h3>
+      <p class="step-desc">I build the site in stages and check in with you at each milestone. You see real progress, not a big-reveal at the end.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Launch + handoff</h3>
+      <p class="step-desc">Deployed to production, with a full walkthrough of your admin panel so your team owns it from day one.</p>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ TESTIMONIALS #}
+{% if testimonials %}
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <div class="section-eyebrow">From clients</div>
+      <h2 class="section-title">What they said</h2>
+    </div>
+  </div>
+  <div class="testimonials-track">
+    {% for t in testimonials %}
+    <div class="testimonial-card reveal">
+      <span class="testimonial-quote-mark">&ldquo;</span>
+      <p class="testimonial-text">{{ t.body }}</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">{{ t.author_name|slice:":1" }}</div>
+        <div>
+          <div class="testimonial-name">{{ t.author_name }}</div>
+          {% if t.author_role %}<div class="testimonial-role">{{ t.author_role }}</div>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ============================================================ CTA #}
+<section class="cta-strip">
+  <div class="container reveal">
+    <h2>{{ site_content.webdev_cta_heading }}</h2>
+    <p>{{ site_content.webdev_cta_text }}</p>
+    <a href="{% url 'contact' %}" class="btn-cta-white">Start a conversation</a>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  /* ── Detect iframes blocked by X-Frame-Options and show fallback ── */
+  document.querySelectorAll('.ba-after iframe[data-fallback-url]').forEach(function(iframe) {
+    iframe.addEventListener('load', function() {
+      try {
+        var href = iframe.contentWindow.location.href;
+        /* Accessible = same-origin page loaded (blocked iframes fall back to about:blank) */
+        if (href === 'about:blank' || href === '') {
+          showBlockedFallback(iframe);
+        }
+      } catch(e) {
+        /* SecurityError = cross-origin = iframe loaded the real site successfully */
+      }
+    });
+  });
+
+  function showBlockedFallback(iframe) {
+    iframe.style.display = 'none';
+    var overlay = iframe.nextElementSibling;
+    if (overlay && overlay.classList.contains('ba-blocked-overlay')) {
+      overlay.style.display = 'flex';
+    }
+  }
+})();
+</script>
+{% endblock %}

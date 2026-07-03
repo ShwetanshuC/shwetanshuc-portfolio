@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ promotion.title }} — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+{% if page and page.hero_image %}
+<section class="hero" style="min-height:480px;">
+  <div class="hero__bg" style="background-image:url('{{ page.hero_image.url }}');background-position:center {{ page.hero_image_focal_y|floatformat:0 }}0%;"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <h1 class="hero__title">{% if page.heading %}{{ page.heading }}{% else %}{{ promotion.title }}{% endif %}</h1>
+    {% if page.subheading %}
+    <p class="hero__subtitle">{{ page.subheading }}</p>
+    {% endif %}
+    <div class="hero__cta">
+      {% for btn in cta_buttons %}
+      <a href="{{ btn.url }}" class="btn {% if btn.style == 'primary' %}btn-primary{% elif btn.style == 'secondary' %}btn-secondary{% else %}btn-outline{% endif %} btn--lg"
+         style="{% if btn.style == 'outline' %}color:#fff;border-color:#fff;{% endif %}">{{ btn.label }}</a>
+      {% endfor %}
+      {% if page.cta_url and page.cta_label and not cta_buttons %}
+      <a href="{{ page.cta_url }}" class="btn btn-primary btn--lg">{{ page.cta_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% else %}
+<div class="page-header" style="background:{{ page.bg_color|default:'var(--color-surface)' }};">
+  <div class="container">
+    <h1 class="page-header__title" style="{% if page and page.bg_color != '#f8fafc' %}color:#fff;{% endif %}">
+      {% if page and page.heading %}{{ page.heading }}{% else %}{{ promotion.title }}{% endif %}
+    </h1>
+    {% if page and page.subheading %}
+    <p class="page-header__subtitle" style="{% if page.bg_color %}color:rgba(255,255,255,0.8);{% endif %}">{{ page.subheading }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<section class="section">
+  <div class="container--prose">
+    {% if page and page.body_text %}
+    <div style="line-height:1.8;color:var(--color-text-muted);">{{ page.body_text|linebreaks }}</div>
+    {% endif %}
+
+    {% for block in blocks %}
+    {% if block.block_type == 'heading' %}
+    <h2 style="margin-top:2rem;">{{ block.content }}</h2>
+    {% elif block.block_type == 'text' %}
+    <div style="line-height:1.8;margin-bottom:1.5rem;">{{ block.content|linebreaks }}</div>
+    {% elif block.block_type == 'image' and block.image %}
+    <figure style="margin:2rem 0;">
+      <img src="{{ block.image.url }}" alt="" style="width:100%;border-radius:var(--radius-lg);">
+    </figure>
+    {% elif block.block_type == 'divider' %}
+    <hr style="border:none;border-top:1px solid var(--color-border);margin:2rem 0;">
+    {% elif block.block_type == 'spacer' %}
+    <div style="height:2rem;"></div>
+    {% endif %}
+    {% endfor %}
+
+    {% if cta_buttons %}
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
+      {% for btn in cta_buttons %}
+      <a href="{{ btn.url }}" class="btn {% if btn.style == 'primary' %}btn-primary{% elif btn.style == 'secondary' %}btn-secondary{% else %}btn-outline{% endif %}">{{ btn.label }}</a>
+      {% endfor %}
+    </div>
+    {% elif page and page.cta_url and page.cta_label %}
+    <div style="margin-top:2rem;">
+      <a href="{{ page.cta_url }}" class="btn btn-primary">{{ page.cta_label }}</a>
+    </div>
+    {% endif %}
+
+    <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-border);">
+      <a href="{% url 'promotion_catalog' promotion.slug %}" class="btn btn-outline">Browse Items in This Promotion</a>
+      &nbsp;
+      <a href="{% url 'promotions_index' %}" style="color:var(--color-text-muted);">&larr; All Promotions</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

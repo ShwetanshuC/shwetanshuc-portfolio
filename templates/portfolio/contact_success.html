@@ -1,0 +1,14 @@
+{% extends "portfolio/base.html" %}
+
+{% block title %}Message Sent — Shwetanshu{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+
+{% block content %}
+<section class="success-page">
+  <div>
+    <h1>Message received</h1>
+    <p>Thanks for reaching out. I'll get back to you within 24 hours.</p>
+    <a href="{% url 'home' %}" class="btn btn--primary btn--lg">&larr; Back to home</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Promotions — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Current Promotions</h1>
+    <p class="page-header__subtitle">Take advantage of our latest deals and special offers.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if promotions %}
+    <div class="grid-3">
+      {% for promo in promotions %}
+      <div class="card">
+        {% with page=promo.page %}
+        {% if page and page.hero_image %}
+        <div style="aspect-ratio:16/9;overflow:hidden;">
+          <img src="{{ page.hero_image.url }}" alt="{{ promo.title }}" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        {% else %}
+        <div style="aspect-ratio:16/9;background:{{ page.bg_color|default:'var(--color-primary)' }};display:flex;align-items:center;justify-content:center;">
+          <span style="color:#fff;font-size:2rem;font-family:var(--font-heading);">{{ promo.title }}</span>
+        </div>
+        {% endif %}
+        <div class="card__body">
+          <h3 class="card__title">{% if page and page.heading %}{{ page.heading }}{% else %}{{ promo.title }}{% endif %}</h3>
+          {% if page and page.subheading %}
+          <p class="card__text">{{ page.subheading }}</p>
+          {% endif %}
+          {% if promo.start_date or promo.end_date %}
+          <p style="font-size:0.75rem;color:var(--color-text-light);margin-bottom:1rem;">
+            {% if promo.start_date %}From {{ promo.start_date|date:"N j, Y" }}{% endif %}
+            {% if promo.end_date %} through {{ promo.end_date|date:"N j, Y" }}{% endif %}
+          </p>
+          {% endif %}
+          <a href="{% url 'promotion_detail' promo.slug %}" class="btn btn-primary btn--sm">View Promotion</a>
+        </div>
+        {% endwith %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <h3>No Active Promotions</h3>
+      <p>Check back soon for upcoming promotions and special offers.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

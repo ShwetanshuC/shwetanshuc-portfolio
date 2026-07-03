@@ -1,0 +1,81 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Shwetanshu — Web Developer & Classical Pianist{% endblock %}
+{% block meta_desc %}Shwetanshu Chakraborthy — full-stack web developer and Royal Conservatory-trained classical pianist. Incoming UNC Kenan-Flagler, Class of 2030.{% endblock %}
+{% block og_title %}Shwetanshu — Web Developer & Classical Pianist{% endblock %}
+{% block og_desc %}Full-stack web developer and Royal Conservatory-trained classical pianist. Incoming UNC Kenan-Flagler, Class of 2030.{% endblock %}
+{% block twitter_title %}Shwetanshu — Web Developer & Classical Pianist{% endblock %}
+{% block twitter_desc %}Full-stack web developer and Royal Conservatory-trained classical pianist. Incoming UNC Kenan-Flagler, Class of 2030.{% endblock %}
+
+{% block content %}
+
+{# ============================================================ PAGE LOADER #}
+<div class="page-loader" id="page-loader" aria-hidden="true">
+  <span class="page-loader-mark">S</span>
+  <span class="page-loader-rule"></span>
+</div>
+
+{# ============================================================ FULL-SCREEN HERO — COLLAGE #}
+<section class="home-hero">
+  <div class="home-hero-bg home-hero-collage">
+    <div class="home-hero-collage-img" style="background-image:url('{% static 'images/dockchain-podium-2.jpg' %}');flex-basis:13.5%;background-position:center 18%" role="img" aria-label=""></div>
+    <div class="home-hero-collage-img" style="background-image:url('{% static 'images/dockchain-team-presenting.jpg' %}');flex-basis:30%;background-position:24% 42%" role="img" aria-label=""></div>
+    <div class="home-hero-collage-img" style="background-image:url('{% static 'images/casual-friends.jpg' %}');flex-basis:22.5%" role="img" aria-label=""></div>
+    <div class="home-hero-collage-img" style="background-image:url('{% static 'images/casual-waterfront.jpg' %}');flex-basis:22.5%" role="img" aria-label=""></div>
+    <div class="home-hero-collage-img" style="background-image:url('{% static 'images/casual-green-alley.jpg' %}');flex-basis:11.5%;background-position:center 15%" role="img" aria-label=""></div>
+  </div>
+  <div class="home-hero-overlay"></div>
+  <div class="home-hero-content">
+    <h1 class="home-hero-name">{{ site_content.home_hero_name }}</h1>
+    <div class="home-hero-cta-row">
+      <a href="{% url 'contact' %}" class="btn-hero-primary">Get in Touch</a>
+      <a href="{% url 'projects' %}" class="btn-hero-secondary">A Few Projects &rarr;</a>
+    </div>
+  </div>
+</section>
+
+{# ============================================================ ABOUT — full person #}
+<section class="home-about">
+  <div class="home-about-inner">
+
+    <div class="home-about-photo reveal">
+      <div class="home-about-photo-frame">
+        <img src="{% static 'images/incoming-piano.jpg' %}" alt="Shwetanshu performing at the piano"
+             class="home-about-img"
+             onerror="this.parentElement.classList.add('photo-missing'); this.remove()">
+        <div class="home-about-photo-fallback">S</div>
+      </div>
+    </div>
+
+    <div class="home-about-text">
+      <div class="section-eyebrow reveal">{{ site_content.home_about_eyebrow }}</div>
+      <h2 class="home-about-heading reveal">
+        {% for line in site_content.home_about_heading_lines %}{{ line }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+      </h2>
+
+      <ul class="home-about-body reveal" style="list-style:none">
+        {% for fact in home_facts %}
+        <li>{{ fact.title }}</li>
+        {% endfor %}
+      </ul>
+
+      <div class="home-about-links reveal">
+        <a href="{% url 'web_dev' %}" class="btn-hero-primary">Web Development</a>
+        <a href="{% url 'music' %}" class="btn-pill-outline">Music</a>
+        <a href="{% url 'projects' %}" class="btn-pill-outline">A Few Projects</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ============================================================ CTA #}
+<section class="cta-strip">
+  <div class="container reveal">
+    <h2>{{ site_content.home_cta_heading }}</h2>
+    <a href="{% url 'contact' %}" class="btn-cta-white">Get in touch</a>
+  </div>
+</section>
+
+{% endblock %}

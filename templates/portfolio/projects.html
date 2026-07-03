@@ -1,0 +1,49 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Projects — Shwetanshu Chakraborthy{% endblock %}
+{% block meta_desc %}Client sites, a port-logistics research build, and an unpaid acoustics project.{% endblock %}
+{% block og_title %}Projects — Shwetanshu Chakraborthy{% endblock %}
+{% block og_desc %}A few things I'm excited to show — client sites, a research build, and a couple of projects that aren't even done yet.{% endblock %}
+{% block twitter_title %}Projects — Shwetanshu Chakraborthy{% endblock %}
+{% block twitter_desc %}A few things I'm excited to show — client sites, a research build, and a couple of projects that aren't even done yet.{% endblock %}
+
+{% block content %}
+
+<h1 class="sr-only">Projects — Shwetanshu Chakraborthy</h1>
+
+<section class="section" style="padding-top:8rem">
+  <div class="container">
+    <div class="projects-list-header reveal">
+      <a href="{% static 'files/Shwetanshu_Chakraborthy_Resume.pdf' %}" target="_blank" class="resume-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        View resume (PDF)
+      </a>
+    </div>
+  </div>
+  {% if projects %}
+  <div class="project-list project-list--plain">
+    {% for project in projects %}
+    <a href="{% url 'project_detail' project.slug %}" class="project-list-row reveal reveal-delay-{{ forloop.counter0|add:1 }}">
+      <h3 class="project-list-row-title">{{ project.title }}</h3>
+      <p class="project-list-row-meta">
+        {{ project.get_category_display }} &middot; {{ project.year }}
+        {% if project.tech_list %} &middot; {{ project.tech_list|slice:":3"|join:", " }}{% endif %}
+      </p>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p style="text-align:center;color:var(--color-text-muted);padding:3rem 0">No projects in this category yet.</p>
+  {% endif %}
+</section>
+
+<section class="cta-strip">
+  <div class="container reveal">
+    <h2>{{ site_content.projects_cta_heading }}</h2>
+    <p>Tell me about your business. I'll give you an honest timeline and price.</p>
+    <a href="{% url 'contact' %}" class="btn-cta-white">Start a project</a>
+  </div>
+</section>
+
+{% endblock %}

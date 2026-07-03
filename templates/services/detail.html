@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }} — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+{% if service.image %}
+<div style="width:100%;height:360px;overflow:hidden;">
+  <img src="{{ service.image.url }}" alt="{{ service.name }}"
+       style="width:100%;height:100%;object-fit:cover;object-position:center {{ service.image_focal_y|floatformat:0 }}0%;">
+</div>
+{% endif %}
+
+<div class="container" style="padding-top:3rem;padding-bottom:3rem;">
+  <nav style="font-size:0.875rem;color:var(--color-text-muted);margin-bottom:2rem;">
+    <a href="{% url 'services_index' %}">Services</a> &rsaquo; {{ service.name }}
+  </nav>
+
+  <div style="display:grid;gap:3rem;grid-template-columns:1fr;">
+    <style>@media(min-width:900px){.service-detail-grid{grid-template-columns:1fr 340px!important;}}</style>
+    <div class="service-detail-grid" style="display:grid;gap:3rem;">
+      <div>
+        {% if service.icon_name %}
+        <div style="font-size:3rem;margin-bottom:1rem;">{{ service.icon_name }}</div>
+        {% endif %}
+        <h1 style="margin-bottom:0.75rem;">{{ service.name }}</h1>
+        {% if service.price_display %}
+        <div style="font-size:1.5rem;font-weight:700;color:var(--color-primary);margin-bottom:2rem;">{{ service.price_display }}</div>
+        {% endif %}
+
+        <div style="line-height:1.85;color:var(--color-text);margin-bottom:2rem;">{{ service.description|linebreaks }}</div>
+
+        {% if features %}
+        <h3 style="margin-bottom:1rem;">What's Included</h3>
+        <ul style="display:flex;flex-direction:column;gap:0.75rem;padding:0;list-style:none;">
+          {% for feature in features %}
+          <li style="display:flex;align-items:flex-start;gap:0.75rem;">
+            <span style="color:var(--color-success);font-size:1.25rem;flex-shrink:0;margin-top:-0.1rem;">&#10003;</span>
+            <span>{{ feature.feature }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+      <aside>
+        <div class="card" style="position:sticky;top:80px;">
+          <div class="card__body">
+            <h3 style="margin-bottom:1.5rem;">Book This Service</h3>
+            {% if form %}
+            <form method="post" action="{% url 'service_inquiry' service.slug %}" novalidate>
+              {% csrf_token %}
+              <div style="display:none" aria-hidden="true">{{ form.website }}</div>
+              {% for field in form %}
+                {% if field.name != 'website' %}
+                <div class="form-group">
+                  <label for="{{ field.id_for_label }}" style="font-size:0.875rem;">
+                    {{ field.label }}{% if field.field.required %} <span style="color:var(--color-error);">*</span>{% endif %}
+                  </label>
+                  {{ field }}
+                  {% if field.errors %}
+                  <ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                  {% endif %}
+                </div>
+                {% endif %}
+              {% endfor %}
+              <button type="submit" class="btn btn-primary" style="width:100%;">Send Inquiry</button>
+            </form>
+            {% else %}
+            <a href="{% url 'service_inquiry' service.slug %}" class="btn btn-primary" style="width:100%;text-align:center;">Book Now</a>
+            {% endif %}
+
+            {% if site_settings and site_settings.phone_display %}
+            <p style="text-align:center;margin-top:1rem;font-size:0.875rem;color:var(--color-text-muted);">
+              Or call us: <a href="tel:{{ site_settings.phone_tel }}">{{ site_settings.phone_display }}</a>
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}

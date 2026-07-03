@@ -1,0 +1,79 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  LIGHTSAIL_SERVICE_NAME: shwetanshu-portfolio
+  CONTAINER_NAME: app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install lightsailctl
+        run: |
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o /usr/local/bin/lightsailctl
+          chmod +x /usr/local/bin/lightsailctl
+
+      - name: Build image
+        run: docker build -t ${{ env.LIGHTSAIL_SERVICE_NAME }}:${{ github.sha }} .
+
+      - name: Push image to Lightsail and deploy
+        run: |
+          aws lightsail push-container-image \
+            --service-name ${{ env.LIGHTSAIL_SERVICE_NAME }} \
+            --label ${{ env.CONTAINER_NAME }} \
+            --image ${{ env.LIGHTSAIL_SERVICE_NAME }}:${{ github.sha }}
+
+          IMAGE=$(aws lightsail get-container-images --service-name ${{ env.LIGHTSAIL_SERVICE_NAME }} \
+            --query 'containerImages[0].image' --output text)
+
+          cat > deployment.json << EOF
+          {
+            "containers": {
+              "${{ env.CONTAINER_NAME }}": {
+                "image": "$IMAGE",
+                "ports": { "8000": "HTTP" },
+                "environment": {
+                  "DJANGO_SECRET_KEY": "${{ secrets.DJANGO_SECRET_KEY }}",
+                  "DJANGO_DEBUG": "false",
+                  "DJANGO_ALLOWED_HOSTS": "${{ secrets.DJANGO_ALLOWED_HOSTS }}",
+                  "MYSQL_HOST": "localhost",
+                  "MYSQL_DB": "portfolio_site",
+                  "MYSQL_USER": "appuser",
+                  "MYSQL_PASSWORD": "${{ secrets.MYSQL_PASSWORD }}",
+                  "AWS_STORAGE_BUCKET_NAME": "${{ secrets.AWS_STORAGE_BUCKET_NAME }}",
+                  "AWS_S3_REGION_NAME": "${{ env.AWS_REGION }}",
+                  "AWS_ACCESS_KEY_ID": "${{ secrets.AWS_ACCESS_KEY_ID }}",
+                  "AWS_SECRET_ACCESS_KEY": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
+                  "SITE_DOMAIN": "${{ secrets.SITE_DOMAIN }}"
+                }
+              }
+            },
+            "publicEndpoint": {
+              "containerName": "${{ env.CONTAINER_NAME }}",
+              "containerPort": 8000,
+              "healthCheck": {
+                "path": "/healthz/",
+                "successCodes": "200"
+              }
+            }
+          }
+          EOF
+
+          aws lightsail create-container-service-deployment \
+            --service-name ${{ env.LIGHTSAIL_SERVICE_NAME }} \
+            --cli-input-json file://deployment.json

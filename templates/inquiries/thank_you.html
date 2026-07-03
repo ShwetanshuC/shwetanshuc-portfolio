@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Thank You — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<section class="section" style="text-align:center;min-height:60vh;display:flex;align-items:center;">
+  <div class="container">
+    <div style="max-width:560px;margin:0 auto;">
+      <div style="font-size:5rem;margin-bottom:1.5rem;">&#10003;</div>
+      <h1 style="font-size:2.5rem;margin-bottom:1rem;color:var(--color-success);">Thank You!</h1>
+      <p style="font-size:1.25rem;color:var(--color-text-muted);margin-bottom:2rem;line-height:1.7;">
+        Your message has been received. A member of our team will be in touch with you shortly.
+      </p>
+      {% if site_settings and site_settings.phone_display %}
+      <p style="color:var(--color-text-muted);margin-bottom:2rem;">
+        Need to reach us immediately? Call <a href="tel:{{ site_settings.phone_tel }}">{{ site_settings.phone_display }}</a>.
+      </p>
+      {% endif %}
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+        <a href="{% url 'catalog_index' %}" class="btn btn-outline">Browse Catalog</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

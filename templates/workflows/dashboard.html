@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}My Tasks — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">
+      {% if user.is_staff %}All Workflows{% else %}My Tasks{% endif %}
+    </h1>
+    <p class="page-header__subtitle">
+      {% if user.is_staff %}Staff view — showing all workflow items.{% else %}Items assigned to you.{% endif %}
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    {% if workflow_types %}
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem;">
+      {% for wtype in workflow_types %}
+      <span class="badge badge--primary" style="font-size:0.875rem;padding:0.4em 0.9em;">{{ wtype.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if items %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Stage</th>
+            <th>Priority</th>
+            {% if user.is_staff %}<th>Assigned To</th>{% endif %}
+            <th>Due Date</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>
+              <strong>{{ item.title }}</strong>
+              {% if item.requester_name %}
+              <div style="font-size:0.8125rem;color:var(--color-text-muted);">{{ item.requester_name }}</div>
+              {% endif %}
+            </td>
+            <td>{{ item.workflow_type.name }}</td>
+            <td>
+              <span class="badge badge--muted">{{ item.stage.name }}</span>
+              {% if item.stage.is_terminal %}
+              <span class="badge badge--success" style="margin-left:0.25rem;font-size:0.65rem;">Done</span>
+              {% endif %}
+            </td>
+            <td>
+              <span class="badge priority--{{ item.priority }}">{{ item.get_priority_display }}</span>
+            </td>
+            {% if user.is_staff %}
+            <td>
+              {% if item.assigned_to %}{{ item.assigned_to.full_name }}{% else %}<span style="color:var(--color-text-light);">Unassigned</span>{% endif %}
+            </td>
+            {% endif %}
+            <td>
+              {% if item.due_date %}
+              <span {% if item.due_date < today %}style="color:var(--color-error);font-weight:600;"{% endif %}>
+                {{ item.due_date|date:"N j, Y" }}
+              </span>
+              {% else %}-{% endif %}
+            </td>
+            <td style="color:var(--color-text-muted);font-size:0.8125rem;">{{ item.updated_at|date:"N j" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if user.is_staff %}
+    <div style="margin-top:1.5rem;text-align:right;">
+      <a href="{% url 'admin:workflows_workflowitem_changelist' %}" class="btn btn-outline btn--sm">Manage in Admin</a>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state">
+      <h3>No Items Found</h3>
+      <p>{% if user.is_staff %}No workflow items exist yet. Create some in the admin panel.{% else %}No tasks are currently assigned to you.{% endif %}</p>
+      {% if user.is_staff %}
+      <a href="{% url 'admin:workflows_workflowitem_add' %}" class="btn btn-primary" style="margin-top:1rem;">Create Workflow Item</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block extra_css %}
+<meta name="description" content="{{ post.meta_description|default:post.excerpt }}">
+{% if post.meta_keywords %}<meta name="keywords" content="{{ post.meta_keywords }}">{% endif %}
+{% endblock %}
+
+{% block content %}
+<article>
+  {% if post.featured_image %}
+  <div style="aspect-ratio:21/9;overflow:hidden;max-height:520px;">
+    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}"
+         style="width:100%;height:100%;object-fit:cover;object-position:center {{ post.image_focal_y|floatformat:0 }}0%;">
+  </div>
+  {% endif %}
+
+  <div class="container--prose" style="padding-top:3rem;padding-bottom:3rem;">
+    <!-- META -->
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;font-size:0.875rem;color:var(--color-text-muted);">
+      {% if post.category %}
+      <a href="{% url 'blog_by_category' post.category.slug %}"
+         style="font-weight:700;color:var(--color-primary);text-transform:uppercase;font-size:0.75rem;letter-spacing:0.05em;text-decoration:none;">
+        {{ post.category.name }}
+      </a>
+      {% endif %}
+      {% if post.published_at %}<span>{{ post.published_at|date:"N j, Y" }}</span>{% endif %}
+      {% if post.author %}<span>By {{ post.author.full_name }}</span>{% endif %}
+      <span>{{ post.reading_time }}</span>
+      {% if not post.is_published %}<span class="badge badge--warning">Draft</span>{% endif %}
+    </div>
+
+    <h1 style="font-size:2.5rem;margin-bottom:1.5rem;line-height:1.15;">{{ post.title }}</h1>
+
+    {% if post.excerpt %}
+    <p style="font-size:1.25rem;color:var(--color-text-muted);margin-bottom:2rem;font-style:italic;border-left:4px solid var(--color-primary);padding-left:1rem;">{{ post.excerpt }}</p>
+    {% endif %}
+
+    {% if post.tags.all %}
+    <div style="margin-bottom:2rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+      {% for tag in post.tags.all %}
+      <a href="{% url 'blog_by_tag' tag.slug %}" class="badge badge--primary" style="text-decoration:none;">#{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div style="line-height:1.85;color:var(--color-text);">{{ post.body|linebreaks }}</div>
+
+    <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-border);">
+      <a href="{% url 'blog_index' %}" style="color:var(--color-text-muted);">&larr; Back to Blog</a>
+    </div>
+  </div>
+</article>
+{% endblock %}

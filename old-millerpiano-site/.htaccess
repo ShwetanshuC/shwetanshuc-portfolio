@@ -1,0 +1,22 @@
+PassengerEnabled on
+PassengerAppRoot /home/sw286rxw00ms/millerpiano
+PassengerBaseURI /
+PassengerPython /home/sw286rxw00ms/virtualenv/millerpiano/3.9/bin/python3.9
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP_HOST} ^(www\.)?millerpiano\.com$ [NC]
+  RewriteRule ^(.*)$ https://millerpiano.com/$1 [L,R=301]
+  # Serve static and media files directly without going through Passenger
+  RewriteCond %{REQUEST_URI} !^/static/
+  RewriteCond %{REQUEST_URI} !^/media/
+</IfModule>
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/sw286rxw00ms/millerpiano"
+PassengerBaseURI "/"
+PassengerPython "/home/sw286rxw00ms/virtualenv/millerpiano/3.9/bin/python"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

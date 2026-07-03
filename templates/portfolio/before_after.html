@@ -1,0 +1,171 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Before & After — Shwetanshu Chakraborthy{% endblock %}
+{% block meta_desc %}Real website redesigns, side by side — old sites versus the Django rebuilds that replaced them.{% endblock %}
+{% block og_title %}Before & After — Shwetanshu Chakraborthy{% endblock %}
+{% block og_desc %}Real website redesigns, side by side — old sites versus the Django rebuilds that replaced them.{% endblock %}
+{% block twitter_title %}Before & After — Shwetanshu Chakraborthy{% endblock %}
+{% block twitter_desc %}Real website redesigns, side by side — old sites versus the Django rebuilds that replaced them.{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <div class="container reveal">
+    <div class="section-eyebrow" style="justify-content:center">Before &amp; after</div>
+    <h1>{{ site_content.ba_hero_title }}</h1>
+    <p>{{ site_content.ba_hero_subtitle }}</p>
+  </div>
+</section>
+
+{# BEFORE/AFTER ITEMS #}
+<section class="before-after-section">
+
+  {% if sites %}
+    <div class="ba-grid">
+      {% for site in sites %}
+      <div class="ba-card reveal">
+        <div class="ba-card-header">
+          <div class="ba-mac-dots">
+            <span class="ba-mac-dot ba-mac-dot--red"></span>
+            <span class="ba-mac-dot ba-mac-dot--yellow"></span>
+            <span class="ba-mac-dot ba-mac-dot--green"></span>
+          </div>
+          <div class="ba-card-header-text">
+            <h3 class="ba-card-title">{{ site.title }}</h3>
+            {% if site.client_name %}<p class="ba-card-client">{{ site.client_name }}</p>{% endif %}
+            {% if site.description %}<p style="font-size:0.875rem;color:var(--color-text-muted);margin:0.5rem 0 0">{{ site.description }}</p>{% endif %}
+          </div>
+        </div>
+
+        {% if site.before_url or site.after_url %}
+        {# ── IFRAME DRAG SLIDER MODE ── #}
+        <div class="ba-iframe-wrap">
+          <div class="ba-slider-wrap" data-slider>
+            <div class="ba-before">
+              {% if site.before_url %}
+              <iframe src="{{ site.before_url }}"
+                      sandbox="allow-scripts allow-same-origin allow-forms"
+                      loading="lazy" tabindex="-1"></iframe>
+              {% elif site.before_screenshot %}
+              <div class="ba-scroll-pane"><img src="{{ site.before_screenshot.url }}" alt="{{ site.before_label|default:'Before' }}"></div>
+              {% else %}
+              <div class="ba-placeholder before-placeholder"><span class="ba-label">{{ site.before_label|default:"Before" }}</span></div>
+              {% endif %}
+              <span class="ba-side-label ba-side-label--left">{{ site.before_label|default:"Before" }}</span>
+            </div>
+            <div class="ba-after">
+              {% if site.after_url %}
+              <iframe src="{{ site.after_url }}"
+                      sandbox="allow-scripts allow-same-origin allow-forms"
+                      loading="lazy" tabindex="-1"
+                      data-fallback-url="{{ site.after_url }}"></iframe>
+              <a href="{{ site.after_url }}" target="_blank" rel="noopener" class="ba-visit-badge">Visit live site &nearr;</a>
+              <div class="ba-blocked-overlay" style="display:none">
+                <span>Live preview unavailable</span>
+                <a href="{{ site.after_url }}" target="_blank" rel="noopener">Open live site &rarr;</a>
+              </div>
+              {% elif site.after_screenshot %}
+              <div class="ba-scroll-pane"><img src="{{ site.after_screenshot.url }}" alt="{{ site.after_label|default:'After' }}"></div>
+              {% else %}
+              <div class="ba-placeholder after-placeholder"><span class="ba-label">{{ site.after_label|default:"After" }}</span></div>
+              {% endif %}
+              <span class="ba-side-label ba-side-label--right">{{ site.after_label|default:"After" }}</span>
+            </div>
+            <div class="ba-divider"></div>
+            <div class="ba-handle">
+              <div class="ba-handle-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% else %}
+        {# ── STATIC IMAGE SLIDER MODE ── #}
+        <div class="ba-slider-wrap" data-slider>
+          <div class="ba-before">
+            {% if site.before_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.before_screenshot.url }}" alt="{{ site.before_label|default:'Before' }}: {{ site.title }}"></div>
+            {% else %}
+            <div class="ba-placeholder before-placeholder">
+              <span class="ba-label">{{ site.before_label|default:"Before" }}</span>
+              <span class="ba-placeholder-text">Old website design</span>
+            </div>
+            {% endif %}
+          </div>
+          <div class="ba-after">
+            {% if site.after_screenshot %}
+            <div class="ba-scroll-pane"><img src="{{ site.after_screenshot.url }}" alt="{{ site.after_label|default:'After' }}: {{ site.title }}"></div>
+            {% if site.visit_url %}
+            <a href="{{ site.visit_url }}" target="_blank" rel="noopener" class="ba-visit-badge">Visit live site &nearr;</a>
+            {% endif %}
+            {% else %}
+            <div class="ba-placeholder after-placeholder">
+              <span class="ba-label">{{ site.after_label|default:"After" }}</span>
+              <span class="ba-placeholder-text">New website design</span>
+            </div>
+            {% endif %}
+          </div>
+          <div class="ba-divider"></div>
+          <div class="ba-handle">
+            <div class="ba-handle-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="ba-labels-row">
+          <div class="ba-label-panel ba-label-panel--before"><span class="ba-tag ba-tag--before">{{ site.before_label|default:"Before" }}{% if site.before_year %} &middot; {{ site.before_year }}{% endif %}</span></div>
+          <div class="ba-label-panel ba-label-panel--after"><span class="ba-tag ba-tag--after">{{ site.after_label|default:"After" }}{% if site.after_year %} &middot; {{ site.after_year }}{% endif %}</span></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  {% else %}
+  <p style="text-align:center;color:var(--color-text-muted);padding:3rem 0">No comparisons published yet.</p>
+  {% endif %}
+</section>
+
+{# CTA #}
+<section class="cta-strip">
+  <div class="container reveal">
+    <h2>Want your site to look like the "after"?</h2>
+    <p>Tell me about your business and I'll give you an honest timeline and price.</p>
+    <a href="{% url 'contact' %}" class="btn-cta-white">Get a quote</a>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+  /* ── Detect iframes blocked by X-Frame-Options and show fallback ── */
+  document.querySelectorAll('.ba-after iframe[data-fallback-url]').forEach(function(iframe) {
+    iframe.addEventListener('load', function() {
+      try {
+        var href = iframe.contentWindow.location.href;
+        if (href === 'about:blank' || href === '') {
+          showBlockedFallback(iframe);
+        }
+      } catch(e) {
+        /* SecurityError = cross-origin = loaded successfully */
+      }
+    });
+  });
+
+  function showBlockedFallback(iframe) {
+    iframe.style.display = 'none';
+    var overlay = iframe.nextElementSibling;
+    if (overlay && overlay.classList.contains('ba-blocked-overlay')) {
+      overlay.style.display = 'flex';
+    }
+  }
+})();
+</script>
+{% endblock %}

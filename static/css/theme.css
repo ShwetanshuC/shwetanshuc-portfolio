@@ -1,0 +1,99 @@
+/* ============================================================
+   PORTFOLIO — DESIGN TOKENS
+   Shwetanshu | Petrichor — misty forest, fresh rain, living green
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&display=swap');
+
+:root {
+  /* --- BRAND COLORS --- */
+  --color-primary:       #1A2E1C;   /* Living forest green */
+  --color-primary-dark:  #101C12;
+  --color-primary-light: #D8E8D4;   /* Pale sage */
+  --color-secondary:     #2A5230;   /* Mid-forest green */
+  --color-accent:        #B07820;   /* Amber through wet leaves — earthy, not candlelit */
+  --color-accent-light:  #EEE4C8;   /* Very soft amber mist */
+
+  /* --- NEUTRAL PALETTE — cool morning air after rain --- */
+  --color-bg:            #F3F6F1;   /* Morning fog — barely-green white */
+  --color-surface:       #E7EDE4;   /* Forest clearing — sage-tinted */
+  --color-surface-2:     #DAE4D6;
+  --color-border:        #C4D2BF;   /* Sage-green border */
+  --color-text:          #172018;   /* Forest floor dark — warm-green black */
+  --color-text-muted:    #506054;   /* Sage-grey */
+  --color-text-light:    #88A08C;
+
+  /* --- SEMANTIC COLORS --- */
+  --color-success:       #276840;
+  --color-warning:       #C87018;
+  --color-error:         #C84040;
+
+  /* --- TYPOGRAPHY ---
+     Body uses the native system font — no web-font download, no FOUT,
+     and it renders as whatever the reader's own OS considers "normal" text. */
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* --- FONT SIZES --- */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+  --text-6xl:  3.75rem;
+
+  /* --- SPACING --- */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-10:  2.5rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-20:  5rem;
+  --space-24:  6rem;
+  --space-32:  8rem;
+
+  /* --- LAYOUT --- */
+  --max-width:       1280px;
+  --max-width-prose: 720px;
+  --container-pad:   clamp(1.5rem, 5vw, 3rem);
+
+  /* --- SHAPE --- */
+  --radius-sm:   0.25rem;
+  --radius:      0.5rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.5rem;
+  --radius-2xl:  2rem;
+  --radius-full: 9999px;
+
+  /* --- ELEVATION — organic, forest-grounded shadows --- */
+  --shadow-sm:  0 1px 3px rgba(20,32,20,0.06);
+  --shadow:     0 4px 12px rgba(20,32,20,0.08);
+  --shadow-md:  0 10px 30px rgba(20,32,20,0.10);
+  --shadow-lg:  0 20px 50px rgba(20,32,20,0.12);
+  --shadow-xl:  0 40px 70px rgba(20,32,20,0.14);
+
+  /* --- TRANSITIONS --- */
+  --transition:    180ms ease;
+  --transition-md: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-lg: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- GRADIENTS ---
+     Used sparingly, as photographic vignettes and small accent fills —
+     never as a full-bleed decorative background. Two stops, not three. */
+  --gradient-amber:  linear-gradient(135deg, #A87018 0%, #966010 100%);
+  --gradient-forest: linear-gradient(165deg, #162C1C 0%, #192E1E 100%);
+  --gradient-hero:   linear-gradient(170deg, #152818 0%, #172C1C 100%);
+  /* CTA strip gets its own darker, warmer-toned close — distinct from the
+     cooler forest green used for page heroes and editorial dark sections,
+     so consecutive dark sections on one page don't read as one flat block. */
+  --gradient-cta:    linear-gradient(160deg, #1E1710 0%, #12240F 100%);
+}

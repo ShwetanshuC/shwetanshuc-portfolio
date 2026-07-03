@@ -1,0 +1,76 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Shwetanshu Chakraborthy{% endblock %}
+{% block meta_desc %}{{ project.short_description }}{% endblock %}
+{% block og_title %}{{ project.title }} — Shwetanshu Chakraborthy{% endblock %}
+{% block og_desc %}{{ project.short_description }}{% endblock %}
+{% block og_image %}{% if project.thumbnail %}{{ site_url }}{{ project.thumbnail.url }}{% else %}{{ site_url }}{% static 'images/og-default.jpg' %}{% endif %}{% endblock %}
+{% block twitter_title %}{{ project.title }} — Shwetanshu Chakraborthy{% endblock %}
+{% block twitter_desc %}{{ project.short_description }}{% endblock %}
+{% block twitter_image %}{% if project.thumbnail %}{{ site_url }}{{ project.thumbnail.url }}{% else %}{{ site_url }}{% static 'images/og-default.jpg' %}{% endif %}{% endblock %}
+
+{% block content %}
+
+<section class="section" style="padding-top:calc(82px + var(--space-16))">
+  <div class="container" style="max-width:760px">
+    <a href="{% url 'projects' %}" class="reveal" style="display:inline-block;margin-bottom:1.5rem;font-size:0.875rem;color:var(--color-text-muted)">&larr; Projects</a>
+
+    {% if project.thumbnail %}
+    <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" class="reveal"
+         style="width:100%;border-radius:var(--radius-xl);margin-bottom:2rem;box-shadow:var(--shadow-md)">
+    {% endif %}
+
+    <div class="project-category-badge reveal" style="margin-bottom:0.75rem">{{ project.get_category_display }} &middot; {{ project.year }}</div>
+    <h1 class="reveal" style="margin-bottom:1rem">{{ project.title }}</h1>
+    <p class="reveal" style="font-size:1.125rem;color:var(--color-text-muted);margin-bottom:1.5rem">{{ project.short_description }}</p>
+
+    {% if project.long_description %}
+    <p class="reveal" style="margin-bottom:2rem">{{ project.long_description }}</p>
+    {% endif %}
+
+    <div class="tech-tags reveal" style="margin-bottom:2rem">
+      {% for tech in project.tech_list %}
+      <span class="tech-tag">{{ tech }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="reveal" style="display:flex;gap:1rem;flex-wrap:wrap">
+      {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn--primary">Visit site &rarr;</a>{% endif %}
+      {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn--outline">GitHub</a>{% endif %}
+      {% if project.paper_file %}<a href="{{ project.paper_file.url }}" target="_blank" rel="noopener" class="btn btn--outline">Read the paper (PDF)</a>{% endif %}
+      <a href="{% url 'contact' %}" class="btn btn--outline">Ask about this &rarr;</a>
+    </div>
+
+    {% if project.images.all %}
+    <div class="project-gallery reveal">
+      {% for photo in project.images.all %}
+      <figure class="project-gallery-item">
+        {% if photo.link_url %}
+        <a href="{{ photo.link_url }}" target="_blank" rel="noopener">
+          <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:project.title }}">
+        </a>
+        {% else %}
+        <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:project.title }}">
+        {% endif %}
+        {% if photo.caption %}
+        <figcaption>
+          {{ photo.caption }}
+          {% if photo.link_url %} &nbsp;<a href="{{ photo.link_url }}" target="_blank" rel="noopener" class="project-gallery-link-hint">&rarr;</a>{% endif %}
+        </figcaption>
+        {% endif %}
+        {% if photo.related_query_list %}
+        <div class="project-gallery-chip-row">
+          {% for q in photo.related_query_list %}
+          <a href="https://www.google.com/search?q={{ q|urlencode }}" target="_blank" rel="noopener" class="project-gallery-chip">{{ q }} &nearr;</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

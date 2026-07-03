@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ promotion.title }} — Items — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">{{ promotion.title }}</h1>
+    <p class="page-header__subtitle">Items included in this promotion.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if items %}
+    <div class="grid-3">
+      {% for item in items %}
+      <a href="{% url 'catalog_detail' item.slug %}" class="card" style="text-decoration:none;color:inherit;">
+        {% if item.primary_image and item.primary_image.image %}
+        <img class="card__image" src="{{ item.primary_image.image.url }}" alt="{{ item.title }}">
+        {% else %}
+        <div class="card__image" style="background:var(--color-surface-2);display:flex;align-items:center;justify-content:center;font-size:3rem;">&#9654;</div>
+        {% endif %}
+        <div class="card__body">
+          <h3 class="card__title">{{ item.title }}</h3>
+          <span class="{% if item.hide_price or not item.price %}price-tag--contact{% else %}price-tag{% endif %}" style="font-size:1.25rem;">{{ item.display_price }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <h3>No Items Tagged</h3>
+      <p>No catalog items have been added to this promotion yet.</p>
+      <a href="{% url 'catalog_index' %}" class="btn btn-primary" style="margin-top:1rem;">Browse Full Catalog</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

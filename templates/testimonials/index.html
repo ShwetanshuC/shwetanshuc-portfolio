@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Customer Reviews — {{ site_settings.site_name|default:"Master Template" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Customer Reviews</h1>
+    <p class="page-header__subtitle">Real experiences from our valued customers.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if testimonials %}
+    <div class="grid-3">
+      {% for t in testimonials %}
+      <div class="card">
+        <div class="card__body">
+          <div class="star-rating" style="margin-bottom:1rem;">
+            {% for i in "12345" %}
+            <span class="star {% if forloop.counter <= t.rating %}star--filled{% endif %}">&#9733;</span>
+            {% endfor %}
+          </div>
+
+          <p style="font-style:italic;color:var(--color-text);line-height:1.7;margin-bottom:1.5rem;">
+            &ldquo;{{ t.content }}&rdquo;
+          </p>
+
+          <div style="display:flex;align-items:center;gap:0.75rem;border-top:1px solid var(--color-border);padding-top:1rem;">
+            {% if t.author_photo %}
+            <img src="{{ t.author_photo.url }}" alt="{{ t.author_name }}"
+                 style="width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+            {% else %}
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--color-primary-light);
+                        display:flex;align-items:center;justify-content:center;
+                        font-weight:700;font-size:1.25rem;color:var(--color-primary);flex-shrink:0;">
+              {{ t.author_name|first }}
+            </div>
+            {% endif %}
+            <div>
+              <div style="font-weight:700;font-size:0.9375rem;">{{ t.author_name }}</div>
+              {% if t.author_title %}
+              <div style="font-size:0.8125rem;color:var(--color-text-muted);">{{ t.author_title }}</div>
+              {% endif %}
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.25rem;">
+                {% if t.source %}
+                <span style="font-size:0.75rem;color:var(--color-text-light);">via {{ t.source }}</span>
+                {% endif %}
+                {% if t.date %}
+                <span style="font-size:0.75rem;color:var(--color-text-light);">{{ t.date|date:"N Y" }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <h3>No Reviews Yet</h3>
+      <p>Be the first to share your experience!</p>
+    </div>
+    {% endif %}
+
+    <div style="text-align:center;margin-top:3rem;padding:2rem;background:var(--color-surface);border-radius:var(--radius-lg);">
+      <h3 style="margin-bottom:0.75rem;">Had a great experience?</h3>
+      <p style="color:var(--color-text-muted);margin-bottom:1.5rem;">We would love to hear from you.</p>
+      <a href="{% url 'contact' %}" class="btn btn-primary">Share Your Story</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

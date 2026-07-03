@@ -1,0 +1,364 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_stats %}
+
+{% block title %}Site Manager — Dashboard{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+{% site_stats as stats %}
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+
+  .mt-cms {
+    --mt-accent: #B07820;
+    --mt-accent-dim: rgba(176,120,32,0.14);
+    --mt-bg: #0e1a10;
+    --mt-panel: #131f15;
+    --mt-panel-alt: #182019;
+    --mt-border: rgba(255,255,255,0.08);
+    --mt-copy: rgba(255,255,255,0.5);
+    --mt-white: rgba(255,255,255,0.9);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: grid;
+    gap: 16px;
+  }
+
+  .mt-stats-bar {
+    display: flex;
+    gap: 1px;
+    background: var(--mt-border);
+    border: 1px solid var(--mt-border);
+  }
+  .mt-stat {
+    flex: 1;
+    padding: 18px 20px;
+    background: var(--mt-panel);
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .mt-stat:hover { background: var(--mt-panel-alt) !important; }
+  .mt-stat-n {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--mt-accent) !important;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .mt-stat-l {
+    font-size: 0.65rem;
+    color: var(--mt-copy) !important;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .mt-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: var(--mt-panel);
+    border: 1px solid var(--mt-border);
+    border-left: 3px solid var(--mt-accent);
+    padding: 22px;
+  }
+  .mt-header h1 {
+    margin: 0;
+    color: var(--mt-white);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1;
+  }
+  .mt-header p { margin: 8px 0 0; color: var(--mt-copy); font-size: 0.9rem; }
+  .mt-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mt-actions a {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--mt-border);
+    color: var(--mt-white);
+    text-decoration: none;
+    background: rgba(255,255,255,0.04);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .mt-actions a:hover {
+    border-color: var(--mt-accent);
+    background: var(--mt-accent-dim);
+    color: var(--mt-white);
+  }
+
+  .mt-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .mt-card {
+    grid-column: span 6;
+    display: grid;
+    gap: 10px;
+    background: var(--mt-panel);
+    color: var(--mt-white);
+    border: 1px solid var(--mt-border);
+    border-left: 3px solid transparent;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .mt-card.mt-card-wide { grid-column: span 12; }
+  .mt-card:hover {
+    background: var(--mt-panel-alt);
+    border-left-color: var(--mt-accent);
+  }
+  .mt-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .mt-card-kicker {
+    margin: 0 0 4px;
+    color: var(--mt-accent);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+  .mt-card-title {
+    margin: 0 0 4px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--mt-white);
+    line-height: 1.1;
+  }
+  .mt-card-desc { margin: 0; color: var(--mt-copy); line-height: 1.5; font-size: 0.8rem; }
+  .mt-card-count {
+    min-width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mt-accent-dim);
+    border: 1px solid rgba(176,120,32,0.3);
+    color: var(--mt-accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .mt-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--mt-copy);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .mt-open-text { color: var(--mt-accent); font-weight: 600; }
+
+  .mt-recent {
+    background: var(--mt-panel);
+    border: 1px solid var(--mt-border);
+    border-left: 3px solid var(--mt-accent);
+    padding: 18px;
+  }
+  .mt-recent h2 {
+    margin: 0 0 12px;
+    color: var(--mt-white);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .mt-recent-table { width: 100%; border-collapse: collapse; }
+  .mt-recent-table tr { border-top: 1px solid var(--mt-border); }
+  .mt-recent-table td { padding: 8px 0; }
+  .mt-badge {
+    display: inline-flex;
+    width: 18px; height: 18px;
+    align-items: center; justify-content: center;
+    font-weight: 700; font-size: 11px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--mt-border);
+    color: var(--mt-copy); line-height: 1;
+  }
+  .mt-badge-add    { border-color: rgba(46,139,87,0.4); color: #4ade80; }
+  .mt-badge-change { border-color: rgba(176,120,32,0.4); color: var(--mt-accent); }
+  .mt-badge-delete { border-color: rgba(220,38,38,0.4); color: #f87171; }
+  .mt-rt-name { color: var(--mt-white); text-decoration: none; font-weight: 500; }
+  .mt-rt-name:hover { color: var(--mt-accent); }
+  .mt-rt-meta { color: var(--mt-copy); font-size: 0.78rem; }
+
+  @media (max-width: 960px) {
+    .mt-card { grid-column: span 12; }
+    .mt-stats-bar { flex-wrap: wrap; }
+    .mt-stat { flex: 1 1 40%; min-width: 0; }
+  }
+</style>
+
+<div class="mt-cms">
+
+  <!-- Stats bar -->
+  <div class="mt-stats-bar">
+    <a href="{% url 'admin:inquiries_contactinquiry_changelist' %}" class="mt-stat">
+      <span class="mt-stat-n">{{ stats.inbox_unread|default:"0" }}</span>
+      <span class="mt-stat-l">Unread Inquiries</span>
+    </a>
+    <a href="{% url 'admin:portfolio_project_changelist' %}" class="mt-stat">
+      <span class="mt-stat-n">{{ stats.projects|default:"0" }}</span>
+      <span class="mt-stat-l">Projects</span>
+    </a>
+    <a href="{% url 'admin:testimonials_testimonial_changelist' %}" class="mt-stat">
+      <span class="mt-stat-n">{{ stats.testimonials|default:"0" }}</span>
+      <span class="mt-stat-l">Testimonials</span>
+    </a>
+    <a href="{% url 'admin:core_sitevisitcounter_changelist' %}" class="mt-stat">
+      <span class="mt-stat-n">{{ stats.visitors|default:"0" }}</span>
+      <span class="mt-stat-l">Total Visits</span>
+    </a>
+  </div>
+
+  <!-- Page header -->
+  <section class="mt-header">
+    <div>
+      <h1>Shwetanshu — Site Manager</h1>
+      <p>Manage your portfolio content, inquiries, and site settings.</p>
+    </div>
+    <div class="mt-actions">
+      <a href="/" target="_blank" rel="noopener">View Live Site &nearr;</a>
+    </div>
+  </section>
+
+  <!-- Card grid -->
+  <div class="mt-grid">
+
+    <a href="{% url 'admin:inquiries_contactinquiry_changelist' %}" class="mt-card mt-card-wide">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Inbox</p>
+          <h2 class="mt-card-title">Contact Inquiries</h2>
+          <p class="mt-card-desc">All contact and project inquiries. Open, review, and mark as read.</p>
+        </div>
+        <div class="mt-card-count">{{ stats.inbox_unread|default:"0" }}</div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:portfolio_sitecontent_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Page Copy</p>
+          <h2 class="mt-card-title">Site Copy</h2>
+          <p class="mt-card-desc">Every headline, tagline, and CTA on every page — home, web dev, music, projects, before/after, contact.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:portfolio_project_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Portfolio</p>
+          <h2 class="mt-card-title">Projects</h2>
+          <p class="mt-card-desc">Add, edit, or remove portfolio projects. Set display order, thumbnails, and tech tags.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:portfolio_beforeaftersite_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Portfolio</p>
+          <h2 class="mt-card-title">Before / After Sites</h2>
+          <p class="mt-card-desc">Manage before/after transformation comparisons shown on the web dev page.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:portfolio_listitem_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Home &amp; Music Pages</p>
+          <h2 class="mt-card-title">Facts &amp; Awards</h2>
+          <p class="mt-card-desc">The home page's quick-facts list, music page achievements, and repertoire rows.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:testimonials_testimonial_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Social Proof</p>
+          <h2 class="mt-card-title">Testimonials</h2>
+          <p class="mt-card-desc">Client reviews with star ratings. Set the featured flag to display on the web dev page.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+    <a href="{% url 'admin:core_sitesettings_changelist' %}" class="mt-card">
+      <div class="mt-card-top">
+        <div>
+          <p class="mt-card-kicker">Configuration</p>
+          <h2 class="mt-card-title">Site Alert Banner</h2>
+          <p class="mt-card-desc">The dismissable banner shown at the very top of every page, when enabled.</p>
+        </div>
+      </div>
+      <div class="mt-card-footer">
+        <span class="mt-open-text">Open &rarr;</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Recent changes -->
+  {% if action_list %}
+  <section class="mt-recent">
+    <h2>Recent changes</h2>
+    <table class="mt-recent-table">
+      {% for action in action_list|slice:":10" %}
+      <tr>
+        <td style="width:26px; padding-right:0;">
+          <span class="mt-badge {% if action.is_addition %}mt-badge-add{% elif action.is_change %}mt-badge-change{% else %}mt-badge-delete{% endif %}">
+            {% if action.is_addition %}+{% elif action.is_change %}~{% else %}&ndash;{% endif %}
+          </span>
+        </td>
+        <td>
+          {% if action.is_deletion %}
+            <span class="mt-rt-name">{{ action.object_repr }}</span>
+          {% else %}
+            <a href="{{ action.get_admin_url }}" class="mt-rt-name">{{ action.object_repr }}</a>
+          {% endif %}
+          <span class="mt-rt-meta" style="margin-left:8px;">{{ action.content_type.name|capfirst }}</span>
+        </td>
+        <td class="mt-rt-meta" style="text-align:right; white-space:nowrap;">{{ action.action_time|timesince }} ago</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}
