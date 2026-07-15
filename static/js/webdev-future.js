@@ -25,8 +25,12 @@ import { getShaderNoiseTexture } from '../vendor/paper-shaders/get-shader-noise-
 
     /* Below this width there isn't enough room for the dot grid to
        resolve legible letterforms — fall back to plain clean text
-       rather than render an illegible smear. */
-    var NARROW_VIEWPORT = 700;
+       rather than render an illegible smear. Lowered from 700: the
+       dot pitch is sized off the title's own rendered box (not the
+       viewport), so it resolves fine down to phone widths too — only
+       true edge cases (folded phones, very old low-res devices) still
+       need the plain fallback. */
+    var NARROW_VIEWPORT = 340;
 
     if (reduceMotion || window.innerWidth < NARROW_VIEWPORT) {
       wrap.classList.add('is-static');
@@ -293,9 +297,15 @@ import { getShaderNoiseTexture } from '../vendor/paper-shaders/get-shader-noise-
        no seam anywhere. "You" gets one extra deliberate beat on top
        of the curve's own slow tail, so the landing still reads as a
        full stop rather than just the curve's natural end. */
-    var RUN_LENGTH = 26;
-    var MIN_DELAY = 60;
-    var MAX_DELAY = 620;
+    /* Same shape of curve on mobile, just compressed — a full ~13s
+       cycle read as "way too long" on a phone, where the section is
+       already in view and scrolling past it mid-animation is the
+       common case. Fewer words and a shorter landing tail bring it
+       to ~5s without changing the easing feel. */
+    var IS_NARROW = window.innerWidth < 700;
+    var RUN_LENGTH = IS_NARROW ? 16 : 26;
+    var MIN_DELAY = IS_NARROW ? 55 : 60;
+    var MAX_DELAY = IS_NARROW ? 480 : 620;
     /* Was a separate fixed FINAL_PAUSE (1500ms) tacked on after the
        curve — but the curve's own last step landed around MAX_DELAY
        (620ms), so jumping straight to 1500ms was a sudden two-and-a-
@@ -306,7 +316,7 @@ import { getShaderNoiseTexture } from '../vendor/paper-shaders/get-shader-noise-
        out from MIN_DELAY up to a much longer LANDING_MAX (the landing)
        — both halves meet at exactly MIN_DELAY at the midpoint, so
        there's no seam anywhere in the whole run, buildup or landing. */
-    var LANDING_MAX = 1650;
+    var LANDING_MAX = IS_NARROW ? 950 : 1650;
 
     var pool = shuffled(POOL);
     var sequence = [];
@@ -376,7 +386,12 @@ import { getShaderNoiseTexture } from '../vendor/paper-shaders/get-shader-noise-
     if (dropdown && top) {
       var openClass = 'madefor-open';
       var close = function () { top.classList.remove(openClass); };
-      var open = function () { top.classList.add(openClass); };
+      /* Only push the stats down once the word has actually settled
+         on "you" — the dropdown itself is CSS-gated to .is-final:hover
+         so it never showed while still cycling, but this listener
+         wasn't gated the same way, so hovering mid-cycle pushed
+         everything down with no panel to justify the gap. */
+      var open = function () { if (word.classList.contains('is-final')) top.classList.add(openClass); };
       word.addEventListener('mouseenter', open);
       dropdown.addEventListener('mouseenter', open);
       word.addEventListener('mouseleave', close);
@@ -594,6 +609,13 @@ import { getShaderNoiseTexture } from '../vendor/paper-shaders/get-shader-noise-
       // Let real interactions (visit-site links, the before/after
       // drag handle) behave normally instead of triggering a swap.
       if (e.target.closest('a, [data-slider], .ba-handle')) return;
+
+      // Below the grid's own stacking breakpoint (matches the
+      // max-width:900px rule that collapses the triangle to a single
+      // column) every card is already full-width and equal-sized —
+      // there's no "top" slot to promote into, so swapping would just
+      // reorder the list with no visible size change. Skip it there.
+      if (window.innerWidth < 900) return;
 
       var clicked = e.target.closest('.ba-card[data-slot="left"], .ba-card[data-slot="right"]');
       if (!clicked) return;

@@ -88,7 +88,14 @@ body.wd-future { font-family: var(--wf-sans); font-weight: 400; }
   align-items: center;
   padding: var(--wf-s2) var(--container-pad);
   pointer-events: none;
+  /* Nav is fixed over scrolling content — including bright card
+     headers and the photo — so it needs its own backdrop to stay
+     legible rather than relying on whatever happens to sit beneath it. */
+  background: linear-gradient(to bottom, rgba(20,18,16,0.85) 0%, rgba(20,18,16,0.55) 65%, transparent 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
+.wf-nav-short { display: none; }
 .wf-corner-nav .wf-corner-link:last-child { justify-self: end; }
 .wf-corner-link {
   pointer-events: auto;
@@ -120,7 +127,12 @@ body.wd-future { font-family: var(--wf-sans); font-weight: 400; }
 }
 
 @media (max-width: 640px) {
-  .wf-nav-title { display: none; }
+  /* All three nav items stay, just tightened: the long "My Student
+     Portfolio" label swaps to "Portfolio" so it no longer wraps to two
+     lines and crowds the center title out, the way it did before. */
+  .wf-nav-full { display: none; }
+  .wf-nav-short { display: inline; }
+  .wf-corner-link, .wf-nav-title { font-size: 0.625rem; letter-spacing: 0.1em; white-space: nowrap; }
 }
 
 /* ============================================================
@@ -746,11 +758,25 @@ body.wd-future .btn-cta-white:hover { border-color: var(--wf-accent) !important;
 }
 
 @media (max-width: 640px) {
+  /* The desktop spacing scale's big gaps (s6–s8, up to 224px) were
+     tuned for a page that's mostly wide whitespace either side of a
+     narrow column of content — on a phone that same column IS the
+     viewport, so the same gaps just read as dead scroll. Redefining
+     the tokens here cascades to every rule that uses them (stats
+     margin, transformations padding, photo margin, etc.) without
+     touching each one individually. */
+  body.wd-future {
+    --wf-s8: 4.5rem;  /* was 14rem */
+    --wf-s7: 3.5rem;  /* was 7.5rem */
+    --wf-s6: 3rem;    /* was 6rem */
+  }
+
   .wf-hero-ctas { flex-direction: column; width: 100%; }
   .wf-hero-ctas a { width: 100%; justify-content: center; text-align: center; }
   .wf-corner-nav { padding: var(--wf-s1) var(--container-pad); }
   .wf-process-num { position: static; opacity: 0.15; font-size: 2.25rem; margin-bottom: 0.5rem; }
   .wf-feature { padding: var(--wf-s6) 0; }
   .wf-feature-stats { flex-direction: column; align-items: flex-start; gap: var(--wf-s5); margin: var(--wf-s6) 0 0; }
-  .wf-feature-blurb { margin-top: var(--wf-s6); }
+  .wf-feature-blurb { margin-top: var(--wf-s5); }
+  body.wd-future .wf-feature-top.madefor-open .wf-feature-stats { margin-top: calc(var(--wf-s6) + 9rem); }
 }

@@ -18,7 +18,10 @@
 
 {# ============================================================ MINIMAL CORNER NAV — no navbar, just two text links #}
 <div class="wf-corner-nav wf-fade">
-  <a href="{% url 'home' %}" class="wf-corner-link">My Student Portfolio</a>
+  <a href="{% url 'home' %}" class="wf-corner-link">
+    <span class="wf-nav-full">My Student Portfolio</span>
+    <span class="wf-nav-short">Portfolio</span>
+  </a>
   <span class="wf-nav-title">Web Development</span>
   <a href="{% url 'contact' %}" class="wf-corner-link">Contact</a>
 </div>

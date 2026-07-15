@@ -208,6 +208,20 @@ function initSlider(wrap) {
   scaleIframes();
   window.addEventListener('resize', scaleIframes, { passive: true });
 
+  /* A single init-time call plus a window resize listener leaves a gap:
+     if `wrap`'s own size settles later than DOMContentLoaded for any
+     reason (a font swap reflow, a grid recalculation from a stylesheet
+     that finishes applying late, browser-specific timing), the iframes
+     are scaled once against a size that's about to change and nothing
+     ever re-triggers scaleIframes() to correct it — no window resize
+     event fires just because one element's box changed. A ResizeObserver
+     watches the wrap directly, so any future size change (including the
+     very first real layout) re-runs the scale calculation automatically. */
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () { scaleIframes(); });
+    ro.observe(wrap);
+  }
+
   const card = wrap.closest('.ba-card');
   const labelPanelBefore = card && card.querySelector('.ba-label-panel--before');
 
