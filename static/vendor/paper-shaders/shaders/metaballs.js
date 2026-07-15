@@ -109,4 +109,3 @@ export {
   metaballsFragmentShader,
   metaballsMeta
 };
-//# sourceMappingURL=metaballs.js.map

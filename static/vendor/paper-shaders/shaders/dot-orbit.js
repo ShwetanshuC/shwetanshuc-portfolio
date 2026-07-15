@@ -120,4 +120,3 @@ export {
   dotOrbitFragmentShader,
   dotOrbitMeta
 };
-//# sourceMappingURL=dot-orbit.js.map

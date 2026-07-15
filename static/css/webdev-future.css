@@ -142,15 +142,6 @@ body.wd-future { font-family: var(--wf-sans); font-weight: 400; }
   z-index: 0;
   background: radial-gradient(ellipse 50% 38% at 50% 48%, rgba(201,168,118,0.045), transparent 72%);
 }
-body.wd-future.has-hero-texture .wf-hero-bg {
-  background-image:
-    radial-gradient(ellipse 50% 38% at 50% 48%, rgba(201,168,118,0.045), transparent 72%),
-    url('/static/images/webdev-future/ember-texture.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.4;
-}
-
 .wf-hero-content {
   position: relative;
   z-index: 2;

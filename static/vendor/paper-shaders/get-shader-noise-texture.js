@@ -15,4 +15,3 @@ const noiseSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD0
 export {
   getShaderNoiseTexture
 };
-//# sourceMappingURL=get-shader-noise-texture.js.map

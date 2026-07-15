@@ -236,4 +236,3 @@ export {
   pulsingBorderFragmentShader,
   pulsingBorderMeta
 };
-//# sourceMappingURL=pulsing-border.js.map

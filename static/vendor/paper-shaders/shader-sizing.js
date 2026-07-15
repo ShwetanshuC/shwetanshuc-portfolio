@@ -35,4 +35,3 @@ export {
   defaultObjectSizing,
   defaultPatternSizing
 };
-//# sourceMappingURL=shader-sizing.js.map

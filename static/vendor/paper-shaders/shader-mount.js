@@ -487,4 +487,3 @@ export {
   ShaderMount,
   isPaperShaderElement
 };
-//# sourceMappingURL=shader-mount.js.map
