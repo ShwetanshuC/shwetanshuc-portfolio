@@ -150,6 +150,7 @@ function initCounters() {
 
   function animateCounter(el) {
     const target = parseInt(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
     const duration = 1800;
     const start = performance.now();
@@ -158,7 +159,8 @@ function initCounters() {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target) + suffix;
+      const value = Math.floor(eased * target).toLocaleString('en-US');
+      el.textContent = prefix + value + suffix;
       if (progress < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);

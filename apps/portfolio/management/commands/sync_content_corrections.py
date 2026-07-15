@@ -1,6 +1,9 @@
+from pathlib import Path
+
+from django.core.files import File
 from django.core.management.base import BaseCommand
 
-from apps.portfolio.models import ListItem, Project, SiteContent
+from apps.portfolio.models import BeforeAfterSite, ListItem, Project, SiteContent
 
 FINANCE_FACT = "Interned in financial automation at Integrus Partners — EBITDA modeling, M&A screening."
 
@@ -114,3 +117,26 @@ class Command(BaseCommand):
             )
             if updated:
                 self.stdout.write(f"Tightened long_description for {slug}")
+
+        # DockChain's Before/After card postdates the original seed fixture
+        # (which only has Miller Piano and Southern Park) — added here rather
+        # than to the fixture itself, since the fixture only loads once on an
+        # empty database and this production DB is long past that point.
+        # No visit_url on purpose: DockChain isn't hosted anywhere public yet,
+        # so the "Visit live site" button stays hidden until it is.
+        dockchain_ba, created = BeforeAfterSite.objects.update_or_create(
+            title="DockChain",
+            defaults=dict(
+                tagline="Built by Shwetanshu Chakraborthy, Aadarsh Jena, Leon Baiye & Taizhe Zhu",
+                after_label="Prototype",
+                sort_order=3,
+            ),
+        )
+        if created:
+            self.stdout.write("Created DockChain before/after entry")
+        if not dockchain_ba.after_screenshot:
+            image_path = Path(__file__).resolve().parents[4] / "static" / "images" / "dockchain-site-home.jpg"
+            if image_path.exists():
+                with open(image_path, "rb") as f:
+                    dockchain_ba.after_screenshot.save("dockchain-site-home.jpg", File(f), save=True)
+                self.stdout.write("Uploaded DockChain after_screenshot")

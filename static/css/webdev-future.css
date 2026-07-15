@@ -1,0 +1,765 @@
+/* ============================================================
+   WEBDEV-FUTURE.CSS — Standalone rebrand for /web-development/ only.
+   See soul.md at the project root for the full design rationale.
+   Editorial, restrained, layered blacks, one muted gold accent used
+   sparingly. Two typefaces only: Fraunces (identity/display) and
+   Inter Tight (everything functional). No cards, no gradients,
+   no fabricated mockups — typography, whitespace, and hairlines
+   carry the page.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap');
+
+body.wd-future {
+  /* ---- dark charcoal, not flat #000 — and layered a shade lighter
+     for the rare panel that needs to lift off the page ---- */
+  --wf-black:      #141210;
+  --wf-black-2:    #17140f;
+  --wf-panel:      #1a1712;
+  --wf-panel-2:    #1e1a15;
+  --wf-panel-3:    #221e17;
+  --wf-border:     rgba(255,255,255,0.08);
+  --wf-border-soft:rgba(255,255,255,0.05);
+
+  /* soft ivory, not pure white — richer against a serif, easier on
+     the eye at display sizes */
+  --wf-text:       #e8e2da;
+  --wf-text-muted: rgba(232,226,218,0.56);
+  --wf-text-faint: rgba(232,226,218,0.34);
+
+  /* muted gold/copper — used sparingly (~5% of the page): the dot
+     title, hover states, one accent word. Never a fill, never a wash. */
+  --wf-accent:      #c9a876;
+  --wf-accent-dim:  rgba(201,168,118,0.5);
+  /* muted burgundy — the "you" landing color. Restrained, not a
+     stop-sign red; it should read as considered, not urgent. */
+  --wf-burgundy:    #a3564f;
+
+  /* ---- type scale (a real one, not arbitrary Tailwind values) ---- */
+  --wf-text-hero:    clamp(3rem, 7.6vw, 6.5rem);
+  --wf-text-display: clamp(3.5rem, 9vw, 7.5rem);       /* 56–120px — the made-for headline */
+  --wf-text-section: clamp(2rem, 4vw, 3.25rem);        /* 48–52px */
+  --wf-text-stat:    clamp(4rem, 8vw, 8.125rem);       /* 64–130px — editorial stat numbers */
+  --wf-text-lg:      clamp(1.25rem, 2vw, 1.625rem);    /* 24–26px */
+  --wf-text-body:    1.125rem;                          /* 18px */
+  --wf-text-label:   0.8125rem;                          /* 13px */
+  --wf-text-meta:    0.6875rem;                          /* 11px */
+
+  /* ---- spacing scale ---- */
+  --wf-s8: 14rem;   /* 224px — the big editorial gaps */
+  --wf-s7: 7.5rem;  /* 120px */
+  --wf-s6: 6rem;    /* 96px  */
+  --wf-s5: 4rem;    /* 64px  */
+  --wf-s4: 3rem;    /* 48px  */
+  --wf-s3: 2rem;    /* 32px  */
+  --wf-s2: 1.5rem;  /* 24px  */
+  --wf-s1: 1rem;    /* 16px  */
+
+  --wf-ease: cubic-bezier(0.22,1,0.36,1);
+
+  --wf-sans:  'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --wf-serif: 'Fraunces', Georgia, serif;
+  background: var(--wf-black);
+}
+
+/* ---- Hide the shared site chrome entirely on this page ---- */
+body.wd-future .site-nav,
+body.wd-future .site-footer,
+body.wd-future #wip-badge,
+body.wd-future #wip-toast { display: none !important; }
+
+body.wd-future main { background: var(--wf-black); }
+body.wd-future { font-family: var(--wf-sans); font-weight: 400; }
+
+/* ============================================================
+   CORNER NAV — two plain text links, identity typeface, no chrome
+   ============================================================ */
+.wf-corner-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  /* Grid rather than flex space-between: the two corner links are
+     very different widths ("My Student Portfolio" vs "Contact"), and
+     space-between would drag the center item off true center to
+     balance the leftover space. Three independent columns keep the
+     title dead-center regardless of the side link widths. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: var(--wf-s2) var(--container-pad);
+  pointer-events: none;
+}
+.wf-corner-nav .wf-corner-link:last-child { justify-self: end; }
+.wf-corner-link {
+  pointer-events: auto;
+  /* Matches the right-side nav-links treatment on the rest of the
+     site (system sans, uppercase, tracked) rather than inventing a
+     new nav typeface for this page. */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--wf-text-muted);
+  text-decoration: none;
+  transition: color 0.35s var(--wf-ease);
+}
+.wf-corner-link:hover { color: var(--wf-accent); text-decoration: none; }
+
+.wf-nav-title {
+  pointer-events: none;
+  justify-self: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--wf-text-muted);
+}
+
+@media (max-width: 640px) {
+  .wf-nav-title { display: none; }
+}
+
+/* ============================================================
+   HERO — title + choices only, nothing else competes
+   ============================================================ */
+.wf-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--wf-s6) var(--container-pad);
+  overflow: hidden;
+}
+
+.wf-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 50% 38% at 50% 48%, rgba(201,168,118,0.045), transparent 72%);
+}
+body.wd-future.has-hero-texture .wf-hero-bg {
+  background-image:
+    radial-gradient(ellipse 50% 38% at 50% 48%, rgba(201,168,118,0.045), transparent 72%),
+    url('/static/images/webdev-future/ember-texture.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+}
+
+.wf-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 820px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+  transition: opacity 0.8s var(--wf-ease), transform 0.5s var(--wf-ease);
+}
+
+/* ---- Dot-formed title ---- */
+.wf-title-wrap {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 var(--wf-s4);
+}
+.wf-title-fallback,
+.wf-title-shader {
+  display: block;
+  transition: opacity 0.7s var(--wf-ease);
+}
+.wf-title-shader {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.wf-title-wrap.is-ready .wf-title-fallback { opacity: 0; transition-duration: 0.6s; }
+.wf-title-wrap.is-ready .wf-title-shader { opacity: 1; }
+.wf-title-wrap.is-static .wf-title-shader { display: none; }
+
+.wf-title-line {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
+  font-family: var(--wf-serif) !important;
+  font-optical-sizing: none;
+  font-weight: 600;
+  font-size: var(--wf-text-hero);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--wf-text);
+  white-space: nowrap;
+}
+.wf-title-shader .wf-title-line { color: transparent; }
+.wf-title-shader {
+  /* A soft glow that lets neighboring dots visually connect without
+     turning into a neon wash — subtle on purpose. */
+  filter: drop-shadow(0 0 3px rgba(242,228,203,0.22));
+}
+
+.wf-hero-ctas {
+  display: flex;
+  gap: var(--wf-s1);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================================
+   BUTTONS — rounded pill, subtle border, micro-lift on hover
+   ============================================================ */
+.wf-btn {
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-label);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.95rem 1.875rem;
+  border-radius: 999px;
+  border: 1px solid var(--wf-text);
+  background: transparent;
+  color: var(--wf-text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.35s var(--wf-ease), color 0.35s var(--wf-ease), transform 0.35s var(--wf-ease), background 0.35s var(--wf-ease);
+}
+.wf-btn:hover { border-color: var(--wf-accent); color: var(--wf-accent); transform: translateY(-2px); text-decoration: none; }
+.wf-btn--ghost { border-color: var(--wf-border); color: var(--wf-text-muted); }
+.wf-btn--ghost:hover { border-color: var(--wf-accent-dim); color: var(--wf-accent); }
+
+/* ---- fade/reveal utilities ---- */
+.wf-fade { opacity: 0; transform: translateY(10px); transition: opacity 0.7s var(--wf-ease), transform 0.7s var(--wf-ease); }
+.wf-fade.visible { opacity: 1; transform: translateY(0); }
+
+body.wd-future .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(3px);
+  transition: opacity 0.6s var(--wf-ease), transform 0.6s var(--wf-ease), filter 0.6s var(--wf-ease);
+}
+body.wd-future .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+/* ============================================================
+   SECTION LABEL — small caps eyebrow used above section titles
+   ============================================================ */
+.wf-label {
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-meta);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wf-text-faint);
+}
+
+/* ============================================================
+   FEATURE — the combined made-for / stats / blurb / photo section.
+   One editorial composition: huge whitespace, zero dividers, one
+   focal point revealed at a time (headline, then numbers, then a
+   line of copy, then a photograph). Same panel as the hero, no seam.
+   ============================================================ */
+body.wd-future .stats-strip::before { display: none; }
+.wf-feature {
+  position: relative;
+  background: var(--wf-black);
+  border-top: none;
+  /* Pulled up under the hero so the top of the headline peeks in at
+     the bottom of the initial viewport — a teaser, not the reveal.
+     The word-cycle only starts once actually scrolled in (see the
+     60%-visible IntersectionObserver threshold in webdev-future.js),
+     so this peek never triggers the animation on its own. */
+  margin-top: -9rem;
+  /* Modest top padding — the headline sits close to the section's own
+     top edge on purpose. All the "huge whitespace" lives between the
+     headline and the stats, and below the stats, instead. */
+  padding: var(--wf-s5) 0 var(--wf-s8);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Headline + stats share one left edge — a deliberate break from the
+   fully-centered composition, the one place in this section that
+   isn't. Blurb and photo below stay centered. */
+.wf-feature-top {
+  max-width: min(1100px, 90vw);
+  margin: 0 auto;
+  text-align: left;
+}
+
+.wf-feature-headline {
+  position: relative;
+  font-family: var(--wf-serif);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: var(--wf-text-display);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--wf-text);
+  margin: 0;
+  max-width: 22ch;
+}
+/* A slower, more deliberate version of the generic .reveal fade — the
+   headline is the one focal point in this section and earns a longer
+   entrance than everything else.
+   (A clip-path mask-wipe was tried here first, but Chromium's
+   IntersectionObserver factors a target's own clip-path into its
+   intersection-ratio calculation — an element starting fully clipped
+   never reads as "visible enough" to trigger its own reveal, a
+   deadlock. Caught via a DOM check showing .reveal never gained
+   .visible even after a full scroll through the page.) */
+body.wd-future .wf-feature-headline.reveal {
+  transition: opacity 1.4s var(--wf-ease), transform 1.4s var(--wf-ease), filter 1.4s var(--wf-ease);
+}
+.wf-madefor-trigger {
+  position: relative;
+  display: inline-block;
+  /* Fixed to the widest word in the cycling pool (set as an inline
+     custom property by JS once measured) so "Made for" never shifts
+     as the third word changes length — only the word itself changes. */
+  width: var(--madefor-word-w, auto);
+  text-align: left;
+}
+.wf-madefor-word {
+  display: inline-block;
+  color: var(--wf-text);
+  /* Slow, deliberate color arrival rather than a snap to red — the
+     word settles into its final hue over more than a second. */
+  transition: color 1.3s var(--wf-ease);
+}
+.wf-madefor-word.is-final {
+  color: var(--wf-burgundy);
+  cursor: pointer;
+}
+
+/* ---- the "holo" dropdown — real site categories, revealed on hover
+   once the word has settled on "you". The outer element's box starts
+   flush against the word (top:100%) with the visual gap pushed inside
+   via padding-top, so the pointer never crosses empty, non-hoverable
+   space between the word and the panel — that gap was why hovering
+   used to lose the panel before the cursor arrived. ---- */
+.wf-madefor-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90vw, 620px);
+  padding-top: var(--wf-s3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--wf-ease);
+  text-align: left;
+  z-index: 10;
+}
+.wf-madefor-dropdown-panel {
+  display: flex;
+  flex-direction: column;
+  /* The dropdown is nested inside the 120px headline, which sets
+     letter-spacing: -0.02em — an em value that computes ONCE at the
+     ancestor's font-size (-2.4px) and inherits as that fixed px
+     value, not as -0.02em recalculated at this element's own smaller
+     size. Without resetting it here, 13px caption text inherits a
+     -2.4px letter-spacing and every character overlaps its neighbor. */
+  letter-spacing: normal;
+  background: rgba(26,23,18,0.9);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--wf-border);
+  border-radius: var(--radius-lg);
+  padding: var(--wf-s1);
+}
+.wf-madefor-word.is-final:hover ~ .wf-madefor-dropdown,
+.wf-madefor-dropdown:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+.wf-madefor-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: var(--wf-s1) var(--wf-s2);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background 0.25s var(--wf-ease);
+}
+.wf-madefor-item:hover { background: rgba(255,255,255,0.05); text-decoration: none; }
+.wf-madefor-item-label {
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-body);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--wf-text);
+}
+.wf-madefor-item-desc {
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-label);
+  font-weight: 400;
+  color: var(--wf-text-muted);
+}
+
+/* ---- stats: editorial, no dividers, huge number, tiny caption ---- */
+.wf-feature-stats {
+  display: flex;
+  justify-content: flex-start;
+  gap: clamp(3rem, 12vw, 12rem);
+  margin: var(--wf-s8) 0 0;
+  transition: margin-top 0.35s var(--wf-ease);
+}
+/* The made-for dropdown panel (3 rows) is taller than the fixed s8
+   gap above the stats, so left alone it overlaps the $10,000+ number.
+   Pushing the stats further down while the panel is open keeps every
+   number readable instead of hidden behind it. */
+body.wd-future .wf-feature-top.madefor-open .wf-feature-stats {
+  margin-top: calc(var(--wf-s8) + 11rem);
+}
+.wf-feature-stat { position: relative; }
+.wf-feature-stat-number-wrap { position: relative; display: inline-block; }
+.wf-feature-stat .stat-number {
+  position: relative;
+  display: inline-block;
+  font-family: var(--wf-sans);
+  font-weight: 600;
+  font-size: var(--wf-text-stat);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--wf-text);
+  /* No tabular-nums here on purpose: it changes digit advance widths
+     (uniform vs proportional), but the color-bleed mask is drawn with
+     Canvas 2D, which has no equivalent font-variant-numeric setting —
+     the mask would always use proportional spacing regardless, so if
+     the real text uses tabular spacing the two silently drift apart
+     digit by digit. That drift is what read as a "shadow" offset. */
+}
+/* The color-bleed overlay: a metaballs shader masked to the exact
+   glyph shapes of the settled number, faded in after the count-up
+   finishes. The plain number underneath never disappears — if the
+   shader fails to load for any reason, the number is still there.
+   mix-blend-mode: screen was the wrong mode — screen-blending a
+   color against an already-near-white destination is close to a
+   no-op (screen(white, anything) = white), so the white digit itself
+   never changed; only the anti-aliased, partially-white edge pixels
+   let any color through, which read as a colored ring drawn behind
+   the letter rather than color inside it. multiply is the correct
+   mode for tinting white content: multiply(white, color) = color, so
+   wherever the mask reveals shader color, it fully replaces the
+   white with that color instead of glowing around it. */
+.stat-number-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s var(--wf-ease);
+  mix-blend-mode: multiply;
+}
+.stat-number-glow.is-visible { opacity: 1; }
+.wf-feature-stat-caption {
+  margin-top: var(--wf-s2);
+  font-size: var(--wf-text-meta);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  color: var(--wf-text-faint);
+}
+
+.wf-feature-blurb {
+  max-width: 46ch;
+  margin: var(--wf-s8) auto 0;
+  font-size: var(--wf-text-body);
+  line-height: 1.75;
+  color: var(--wf-text-muted);
+}
+
+.wf-feature-photo {
+  margin: var(--wf-s7) auto 0;
+  max-width: 380px;
+}
+.wf-feature-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  filter: grayscale(0.15) contrast(1.03);
+}
+.wf-feature-photo-caption {
+  margin: var(--wf-s2) 0 0;
+  font-family: var(--wf-serif);
+  font-style: italic;
+  font-size: var(--wf-text-label);
+  color: var(--wf-text-faint);
+}
+
+/* ============================================================
+   TRANSFORMATION — cards surround the photo, one merged section
+   with the made-for/stats/blurb above. DOM order from the loop is
+   [inventory, marketing, dockchain], then the photo. `order` moves
+   dockchain to a full-width row on top and slots the photo between
+   the other two on the row below — a triangle wrapped around a
+   center photo instead of a plain grid.
+   ============================================================ */
+body.wd-future .wf-surround-grid {
+  display: grid !important;
+  grid-template-columns: 1fr minmax(240px, 300px) 1fr !important;
+  align-items: center;
+  max-width: 1180px !important;
+  gap: var(--wf-s4) !important;
+  padding-top: var(--wf-s7);
+}
+/* Slot is a `data-slot` attribute rather than nth-child, because
+   clicking a card swaps its slot with whichever card is on top —
+   the DOM order never changes, only which card claims which
+   position. */
+body.wd-future .wf-surround-grid > .ba-card[data-slot="left"] { order: 2; }
+body.wd-future .wf-surround-grid > .ba-card[data-slot="right"] { order: 4; }
+body.wd-future .wf-surround-grid > .ba-card[data-slot="top"] {
+  order: 1;
+  grid-column: 1 / -1;
+  /* width:100% (not just max-width) is required here: with both side
+     margins auto and width left at its default `auto`, a grid item is
+     sized to shrink-to-fit its own content instead of stretching —
+     DockChain's card happens to hit the 680px cap because its content
+     (a real <img> in normal flow) is wide, but the slider-based cards
+     have their before/after panes absolutely positioned, so they have
+     almost no in-flow content and were shrinking to ~270px instead of
+     matching size when promoted to this slot. */
+  width: 100%;
+  max-width: 680px; /* clearly larger than the ~392px side cards — the top slot reads as "promoted" */
+  margin: 0 auto var(--wf-s2);
+}
+body.wd-future .wf-surround-grid > .wf-feature-photo { order: 3; margin: 0; } /* center, between the two cards */
+
+/* The two side cards double as buttons — clicking either promotes it
+   to the top slot. The current top card isn't clickable for this
+   (nothing to swap with itself). */
+body.wd-future .wf-surround-grid > .ba-card[data-slot="left"],
+body.wd-future .wf-surround-grid > .ba-card[data-slot="right"] {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  body.wd-future .wf-surround-grid { grid-template-columns: 1fr !important; padding-top: var(--wf-s6); }
+  body.wd-future .wf-surround-grid > .ba-card[data-slot="left"],
+  body.wd-future .wf-surround-grid > .ba-card[data-slot="right"],
+  body.wd-future .wf-surround-grid > .ba-card[data-slot="top"] { order: 0; max-width: none; margin: 0; }
+  body.wd-future .wf-surround-grid > .wf-feature-photo { order: 0; margin: var(--wf-s4) auto; }
+}
+body.wd-future .section-eyebrow {
+  font-family: var(--wf-sans) !important;
+  font-size: var(--wf-text-meta) !important;
+  letter-spacing: 0.18em !important;
+  color: var(--wf-text-faint) !important;
+  font-weight: 500;
+}
+body.wd-future .section-eyebrow::before { background: var(--wf-accent) !important; box-shadow: none; }
+body.wd-future .section-title {
+  font-family: var(--wf-serif) !important;
+  font-optical-sizing: auto;
+  font-weight: 500 !important;
+  font-size: var(--wf-text-section) !important;
+  letter-spacing: -0.015em;
+  color: var(--wf-text) !important;
+}
+body.wd-future .section-title em { color: var(--wf-accent) !important; font-style: italic; }
+body.wd-future .section-subtitle { font-size: var(--wf-text-body) !important; color: var(--wf-text-muted) !important; }
+body.wd-future .section-subtitle a { color: var(--wf-text) !important; border-bottom: 1px solid var(--wf-border); }
+
+body.wd-future .ba-card {
+  background: var(--wf-panel) !important;
+  border: 1px solid var(--wf-border) !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+  box-shadow: none;
+  transition: transform 0.5s var(--wf-ease), border-color 0.5s var(--wf-ease);
+}
+body.wd-future .ba-card:hover { transform: translateY(-4px); border-color: var(--wf-accent-dim) !important; }
+body.wd-future .ba-card-header {
+  background: var(--wf-panel-2) !important;
+  border-bottom-color: var(--wf-border-soft) !important;
+  padding: var(--wf-s2) var(--wf-s2) !important;
+  justify-content: space-between !important;
+}
+body.wd-future .ba-mac-dots { display: none !important; }
+body.wd-future .ba-card-header-text { text-align: left !important; }
+.ba-prototype-tag {
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--wf-accent);
+  border: 1px solid var(--wf-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+.ba-single-image {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.ba-single-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ba-single-caption {
+  padding: var(--wf-s2);
+  margin: 0;
+  font-size: var(--wf-text-label);
+  color: var(--wf-text-faint);
+  line-height: 1.6;
+}
+body.wd-future .ba-card-title {
+  color: var(--wf-text-faint) !important;
+  font-family: var(--wf-sans);
+  font-size: var(--wf-text-meta);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 !important;
+}
+body.wd-future .ba-card-client { display: none; }
+body.wd-future .ba-label-panel { background: var(--wf-panel-2) !important; }
+/* The shared .ba-tag classes carry light-theme pill backgrounds
+   (pink/mint) — invisible-on-invisible once only the text color is
+   overridden. Flatten to plain text, no pill. */
+body.wd-future .ba-tag--before { background: none !important; color: var(--wf-text-faint) !important; padding-left: 0 !important; }
+body.wd-future .ba-tag--after { background: none !important; color: var(--wf-accent) !important; padding-left: 0 !important; }
+body.wd-future .ba-visit-badge {
+  background: var(--wf-black) !important;
+  border: 1px solid var(--wf-border) !important;
+  color: var(--wf-text) !important;
+  transition: border-color 0.35s var(--wf-ease), color 0.35s var(--wf-ease);
+}
+body.wd-future .ba-visit-badge:hover { border-color: var(--wf-accent-dim) !important; color: var(--wf-accent) !important; }
+
+/* ============================================================
+   PROCESS — alternating rhythm, large ghost numerals, no cards
+   ============================================================ */
+body.wd-future .section--alt { background: var(--wf-black) !important; border-top: 1px solid var(--wf-border-soft); }
+.wf-process {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr 1fr 0.9fr;
+  gap: var(--wf-s3);
+}
+@media (max-width: 900px) { .wf-process { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .wf-process { grid-template-columns: 1fr; } }
+.wf-process-step {
+  position: relative;
+  padding-top: var(--wf-s2);
+  border-top: 1px solid var(--wf-border);
+}
+.wf-process-step:nth-child(2n) { margin-top: var(--wf-s3); }
+@media (max-width: 900px) { .wf-process-step:nth-child(2n) { margin-top: 0; } }
+.wf-process-num {
+  position: absolute;
+  top: -0.4em;
+  right: 0;
+  font-family: var(--wf-serif);
+  font-optical-sizing: auto;
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--wf-text);
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+}
+.wf-process-title {
+  font-family: var(--wf-serif);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: var(--wf-text-lg);
+  color: var(--wf-text);
+  margin: 0 0 0.625rem;
+  position: relative;
+}
+.wf-process-desc { font-size: 0.9375rem; color: var(--wf-text-muted); line-height: 1.7; margin: 0; position: relative; }
+
+/* ============================================================
+   TESTIMONIALS — plain centered pull-quotes, no card, no avatar
+   ============================================================ */
+.wf-quotes { background: var(--wf-black); border-top: 1px solid var(--wf-border-soft); padding-bottom: var(--wf-s5); }
+.wf-quotes-list {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wf-s5);
+}
+.wf-quote { text-align: center; }
+.wf-quote-text {
+  font-family: var(--wf-serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--wf-text-lg);
+  line-height: 1.5;
+  color: var(--wf-text);
+  margin: 0 0 var(--wf-s2);
+}
+.wf-quote-author { font-size: var(--wf-text-label); color: var(--wf-text-faint); margin: 0; }
+
+/* ============================================================
+   CTA STRIP
+   ============================================================ */
+body.wd-future .cta-strip { background: var(--wf-black) !important; border-top: 1px solid var(--wf-border-soft); }
+body.wd-future .cta-strip::before { display: none; }
+body.wd-future .cta-strip h2 {
+  font-family: var(--wf-serif) !important;
+  font-optical-sizing: auto;
+  font-weight: 500 !important;
+  font-size: var(--wf-text-section) !important;
+  color: var(--wf-text) !important;
+  font-style: normal !important;
+}
+body.wd-future .cta-strip p { font-size: var(--wf-text-body) !important; color: var(--wf-text-muted) !important; }
+body.wd-future .btn-cta-white {
+  font-size: var(--wf-text-label) !important;
+  background: transparent !important;
+  border: 1px solid var(--wf-text) !important;
+  color: var(--wf-text) !important;
+  border-radius: 999px;
+  transition: border-color 0.35s var(--wf-ease), color 0.35s var(--wf-ease), transform 0.35s var(--wf-ease);
+}
+body.wd-future .btn-cta-white:hover { border-color: var(--wf-accent) !important; color: var(--wf-accent) !important; transform: translateY(-2px); }
+
+/* ============================================================
+   MINIMAL FOOTER
+   ============================================================ */
+.wf-footer {
+  border-top: 1px solid var(--wf-border-soft);
+  padding: var(--wf-s2) var(--container-pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--wf-s1);
+}
+.wf-footer p { margin: 0; font-size: var(--wf-text-meta); letter-spacing: 0.04em; color: var(--wf-text-faint); }
+.wf-footer a { font-size: var(--wf-text-label); color: var(--wf-text-muted); text-decoration: none; transition: color 0.3s var(--wf-ease); }
+.wf-footer a:hover { color: var(--wf-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wf-fade, body.wd-future .reveal { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .wf-showcase-rule { transition: none !important; width: 48px !important; }
+}
+
+@media (max-width: 700px) {
+  .wf-title-line { white-space: normal; width: auto; }
+}
+
+@media (max-width: 640px) {
+  .wf-hero-ctas { flex-direction: column; width: 100%; }
+  .wf-hero-ctas a { width: 100%; justify-content: center; text-align: center; }
+  .wf-corner-nav { padding: var(--wf-s1) var(--container-pad); }
+  .wf-process-num { position: static; opacity: 0.15; font-size: 2.25rem; margin-bottom: 0.5rem; }
+  .wf-feature { padding: var(--wf-s6) 0; }
+  .wf-feature-stats { flex-direction: column; align-items: flex-start; gap: var(--wf-s5); margin: var(--wf-s6) 0 0; }
+  .wf-feature-blurb { margin-top: var(--wf-s6); }
+}

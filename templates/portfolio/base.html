@@ -62,7 +62,7 @@
   <link rel="stylesheet" href="{% static 'css/portfolio.css' %}?v=14">
   {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
   {# NAVIGATION #}
   <nav class="site-nav" id="site-nav">

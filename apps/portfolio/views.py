@@ -18,7 +18,7 @@ def web_dev(request):
     except Exception:
         testimonials = []
 
-    ba_sites = list(BeforeAfterSite.objects.all()[:2])
+    ba_sites = list(BeforeAfterSite.objects.all()[:3])
     context = {
         "testimonials": testimonials,
         "ba_sites": ba_sites,
